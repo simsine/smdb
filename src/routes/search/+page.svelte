@@ -38,7 +38,7 @@
             <div>
                 <p><b>{movie.Title}</b></p>
                 <p>{movie.Type} | {movie.Year}</p>
-                <!-- <img src="{movie.Poster}" alt=""> -->
+                <img src="{movie.Poster}" alt="">
                 <hr>
             </div>
         {/each}
