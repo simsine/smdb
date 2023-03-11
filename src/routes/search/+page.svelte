@@ -1,32 +1,12 @@
 <script lang="ts">
-    interface SearchQueryResult{
-        Search:Array<Object>;
-        totalResults:Number;
-        Response:String;
-        Error?:String;
-    }  
-    interface Movie {
-        Title: String;
-        Year: String;
-        imdbID: String;
-        Type: String;
-        Poster: String;
-    }
-    interface SearchQueryResultSearch extends Array<Movie>{
-        [index:number]:{
-            Title: String;
-            Year: String;
-            imdbID: String;
-            Type: String;
-            Poster: string;
-        };
-    }
+	import type { SearchQueryResult, SearchQueryResultSearch } from "$lib/types"
 
     export let data
 
+    let searchQueryResult:SearchQueryResult
     $: searchQueryResult = data.searchQueryResult
+    let search:SearchQueryResultSearch
     $: search = searchQueryResult.Search
-
 </script>
 
 {#if searchQueryResult.Response == "True"}
@@ -35,15 +15,18 @@
     <section>
         <hr>
         {#each search as movie}
+                <!--TODO Make component-->
             <div>
                 <p><b>{movie.Title}</b></p>
                 <p>{movie.Type} | {movie.Year}</p>
-                <img src={movie.Poster} alt="">
+                <a href=/title/{movie.imdbID}>
+                    <img src={movie.Poster} alt="">
+                </a>
                 <hr>
             </div>
         {/each}
     </section>
 {:else}
-    <p>{searchQueryResult.Error}</p>
+    <i>{searchQueryResult.Error}</i>
 {/if}
     
