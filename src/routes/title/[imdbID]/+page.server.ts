@@ -1,11 +1,13 @@
-import { SECRET_APIBASEURL, SECRET_APIKEY } from '$env/static/private';
 import type { PageServerLoad } from './$types';
+import { SECRET_APIKEY, SECRET_APIBASEURL } from '$env/static/private';
 
-export const load = (async ({params}) => {
+export const load = (async ({ fetch, params}) => {
     let imdbID = params.imdbID
     
     let response = await fetch(`${SECRET_APIBASEURL}?apikey=${SECRET_APIKEY}&i=${imdbID}`);
-    let searchQueryResult = await response.json()
+    let movieFull = await response.json()
 
-    return {imdbID, searchQueryResult};
+    // console.log(movieFull)
+
+    return {imdbID, movieFull};
 }) satisfies PageServerLoad;

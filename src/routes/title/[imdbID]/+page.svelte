@@ -1,16 +1,14 @@
 <script lang="ts">
-    export let data
+    import MovieFullContainer from '$lib/components/movieFullContainer.svelte';
+	import type { MovieFull } from '$lib/types'
 
-    let movie = data.searchQueryResult
+    export let data
+    let movie:MovieFull = data.movieFull
+    let imdbID = data.imdbID
 </script>
 
 {#if movie.Response === "True"}
-        <!--TODO Make component-->
-    <div>
-        <p><b>{movie.Title}</b></p>
-        <p>{movie.Type} | {movie.Year}</p>
-        <img src={movie.Poster} alt="">
-    </div>
+    <MovieFullContainer {movie} />
 {:else}
     <i>{movie.Error}</i>
 {/if}

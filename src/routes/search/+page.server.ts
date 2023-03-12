@@ -9,5 +9,7 @@ export const load = (async ({ fetch, url }) => {
     let response = await fetch(`${SECRET_APIBASEURL}?apikey=${SECRET_APIKEY}&s=${searchQuery}&type=${searchFilter}&page=${searchPage}`);
     let searchQueryResult = await response.json()
 
+    // console.log(searchQueryResult)
+
     return {searchQuery, searchQueryResult}
 }) satisfies PageServerLoad;

@@ -1,8 +1,9 @@
 <script lang="ts">
+    import MovieShortContainer from "$lib/components/movieShortContainer.svelte";
+
 	import type { SearchQueryResult, SearchQueryResultSearch } from "$lib/types"
 
     export let data
-
     let searchQueryResult:SearchQueryResult
     $: searchQueryResult = data.searchQueryResult
     let search:SearchQueryResultSearch
@@ -10,23 +11,26 @@
 </script>
 
 {#if searchQueryResult.Response == "True"}
-    <p><b>Search</b> "{data.searchQuery}"</p>
+    <h2><b>Search</b> "{data.searchQuery}"</h2>
     <p>Total results found: {searchQueryResult.totalResults}</p>
+    <hr>
     <section>
-        <hr>
         {#each search as movie}
-                <!--TODO Make component-->
-            <div>
-                <p><b>{movie.Title}</b></p>
-                <p>{movie.Type} | {movie.Year}</p>
-                <a href=/title/{movie.imdbID}>
-                    <img src={movie.Poster} alt="">
-                </a>
-                <hr>
-            </div>
+            <MovieShortContainer {movie} />
         {/each}
     </section>
 {:else}
     <i>{searchQueryResult.Error}</i>
 {/if}
     
+<style>
+    /*! Temp  */
+    section{
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1em;
+        row-gap: 1em;
+
+        /* aspect-ratio: 3/4; */
+    }
+</style>

@@ -1,0 +1,13 @@
+/* https://coolors.co/palette/780000-c1121f-fdf0d5-003049-669bbc */
+/* https://coolors.co/palette/2b2d42-8d99ae-edf2f4-ef233c-d90429 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+html * {
+    font-family: Roboto, sans-serif;
+}
+
+a {
+    color: rgb(208, 173, 240);
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: unset;
+}
