@@ -4,7 +4,11 @@
 html * {
     font-family: Roboto, sans-serif;
 }
-
+body{
+    margin: 0;
+    background-color: #2B2D42;
+    color: #EDF2F4;
+}
 a {
     color: rgb(208, 173, 240);
 }
