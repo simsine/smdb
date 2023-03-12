@@ -4,8 +4,8 @@
     import "$lib/app.css"
 </script>
 
+<Navbar />
 <main>
-    <Navbar />
     <slot />
 </main>
 

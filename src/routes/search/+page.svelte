@@ -19,6 +19,7 @@
             <MovieShortContainer {movie} />
         {/each}
     </section>
+    <hr>
 {:else}
     <i>{searchQueryResult.Error}</i>
 {/if}

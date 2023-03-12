@@ -16,7 +16,7 @@
 
 <style>
     nav{
-        padding: 15px 30px 15px 30px;
+        margin: 15px 30px 15px 30px;
         display: flex;
         flex-direction: row;
         align-items: center;
