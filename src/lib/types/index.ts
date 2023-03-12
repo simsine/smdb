@@ -40,22 +40,3 @@ interface SearchQueryResult{
 type SearchQueryResultSearch = Array<MovieShort>
 
 export type {MovieShort, MovieFull, SearchQueryResult, SearchQueryResultSearch}
-
-// {
-//     Rated: 'TV-14',
-//     Released: '24 Oct 2010',
-//     Runtime: '88 min',
-//     Genre: 'Crime, Drama, Mystery',
-//     Director: 'N/A',
-//     Writer: 'Mark Gatiss, Steven Moffat',
-//     Actors: 'Benedict Cumberbatch, Martin Freeman, Una Stubbs',
-//     Plot: 'A modern update finds the famous sleuth and his doctor partner solving crime in 21st-century London.',
-//     Language: 'English',
-//     Country: 'United Kingdom, United States',
-//     Awards: 'Won 9 Primetime Emmys. 93 wins & 183 nominations total',
-//     Ratings: [ { Source: 'Internet Movie Database', Value: '9.1/10' } ],
-//     Metascore: 'N/A',
-//     imdbRating: '9.1',
-//     imdbVotes: '939,113',
-//     totalSeasons: '4',
-//   }

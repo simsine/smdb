@@ -2,10 +2,10 @@
     <a href="/" class="logo"><span>sMDB</span></a>
     <form action="/search">
         <select name="f" id="f">
-            <option value="">All</option>
-            <option value="movie">Movies</option>
-            <option value="series">Series</option>
-            <option value="game">Games</option>
+            <option value=""       >All</option>
+            <option value="movie"  >Movies</option>
+            <option value="series" >Series</option>
+            <option value="game"   >Games</option>
             <option value="episode">Episodes</option>
         </select>
         <input placeholder="Search movies, series, games and more..." type="text" name="s" id="s">
@@ -31,7 +31,7 @@
         font-weight: 900;
         font-size: 2em;
         text-decoration: none;
-        color: #2B2D42;
+        color: #EDF2F4;
         background-color: #EF233C;
         padding: 5px ;
         border-radius: 0.25em;
@@ -46,11 +46,20 @@
     form {
         width: 100%;
         display: flex;
+        gap: 1px;
     }
-    form select, form input, form option{
+    form select{
+        border-top-left-radius: 0.25em;
+        border-bottom-left-radius: 0.25em;
+    }
+    form input:last-of-type{
+        border-top-right-radius: 0.25em;
+        border-bottom-right-radius: 0.25em;
+    }
+    form select, form input{
         padding: 0.8em;
-        border-radius: 0.25em;
         font-size: 1em;
+        border: none;
     }
     form input[type=text]{
         width: 100%;

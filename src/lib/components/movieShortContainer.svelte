@@ -3,11 +3,11 @@
     export let movie:MovieShort;
 </script>
 
-<div>
+<article>
     <p><b>{movie.Title}</b></p>
     <p>{movie.Type} | {movie.Year}</p>
     <div class="imagewrapper"><a href=/title/{movie.imdbID}><img src={movie.Poster} alt=""></a></div>
-</div>
+</article>
 
 <style>
     /*! Godlike card image wrapper !*/
