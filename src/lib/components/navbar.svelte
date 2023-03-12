@@ -1,5 +1,5 @@
 <nav>
-    <a href="/" class="logo">sMDB</a>
+    <a href="/" class="logo"><span>sMDB</span></a>
     <form action="/search">
         <select name="f" id="f">
             <option value="">All</option>
@@ -28,11 +28,12 @@
 
     .logo{
         letter-spacing: -1px;
+        font-weight: 900;
         font-size: 2em;
         text-decoration: none;
-        color: #161A1D;
-        background-color: #D90429;
-        padding: 5px;
+        color: #2B2D42;
+        background-color: #EF233C;
+        padding: 5px ;
         border-radius: 0.25em;
     }
     .user-content{
