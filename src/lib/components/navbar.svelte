@@ -9,7 +9,7 @@
             <option value="episode">Episodes</option>
         </select>
         <input placeholder="Search for movies, series, games and more..." type="text" name="s" id="s">
-        <input name="p" value="1" hidden>
+        <input type="hidden" name="p" value="1">
         <input type="submit" value="Search">
     </form>
     <a href="/usercontent" class="user-content">My content</a>
@@ -32,7 +32,7 @@
         font-weight: 900;
         font-size: 2em;
         text-decoration: none;
-        color: #EDF2F4;
+        color: --color-light;
         background-color: #EF233C;
         padding: 5px ;
         border-radius: 0.25em;
