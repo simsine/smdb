@@ -2,8 +2,8 @@ import type { PageServerLoad } from './$types';
 import { SECRET_APIKEY, SECRET_APIBASEURL } from '$env/static/private';
 
 export const load = (async ({ fetch, url }) => {
-    let searchQuery = url.searchParams.get("s")
     let searchFilter = url.searchParams.get("f")
+    let searchQuery = url.searchParams.get("s")
     let searchPage = url.searchParams.get("p") || 1
 
     let response = await fetch(`${SECRET_APIBASEURL}?apikey=${SECRET_APIKEY}&s=${searchQuery}&type=${searchFilter}&page=${searchPage}`);
@@ -11,5 +11,5 @@ export const load = (async ({ fetch, url }) => {
 
     // console.log(searchQueryResult)
 
-    return {searchQuery, searchQueryResult}
+    return {searchParameters:{searchFilter, searchQuery, searchPage}, searchQueryResult}
 }) satisfies PageServerLoad;

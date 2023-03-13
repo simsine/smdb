@@ -33,7 +33,7 @@ interface MovieFull extends MovieShort{
 
 interface SearchQueryResult{
     Search:SearchQueryResultSearch;
-    totalResults:Number;
+    totalResults:number;
     Response:string;
     Error?:string;
 }

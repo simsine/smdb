@@ -8,7 +8,8 @@
             <option value="game"   >Games</option>
             <option value="episode">Episodes</option>
         </select>
-        <input placeholder="Search movies, series, games and more..." type="text" name="s" id="s">
+        <input placeholder="Search for movies, series, games and more..." type="text" name="s" id="s">
+        <input name="p" value="1" hidden>
         <input type="submit" value="Search">
     </form>
     <a href="/usercontent" class="user-content">My content</a>

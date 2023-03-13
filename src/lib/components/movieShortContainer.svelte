@@ -4,9 +4,9 @@
 </script>
 
 <article>
+    <div class="imagewrapper"><a href=/title/{movie.imdbID}><img src={movie.Poster} alt=""></a></div>
     <p><b>{movie.Title}</b></p>
     <p>{movie.Type} | {movie.Year}</p>
-    <div class="imagewrapper"><a href=/title/{movie.imdbID}><img src={movie.Poster} alt=""></a></div>
 </article>
 
 <style>
@@ -16,8 +16,10 @@
         align-items: center;
         justify-content: center;
 
-        /* width: 100%;
-        aspect-ratio: 2/3; */
+        outline: auto;
+
+        width: 100%;
+        aspect-ratio: 2/3; 
 
         /* background-color: rgb(0, 0, 0); */
         border-radius: 1em;

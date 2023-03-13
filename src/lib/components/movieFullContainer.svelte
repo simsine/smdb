@@ -19,7 +19,7 @@
             <p><b>Writers</b>{#each movie.Writer.split(", ") as writer}<span class="person">{writer}</span>{/each}</p>
             <p><b>Actors</b>{#each movie.Actors.split(", ") as actor}<span class="person">{actor}</span>{/each}</p>
             <hr>
-            <p>{movie.Language}</p>
+            <p><b>Languages</b>{movie.Language}</p>
         </div>
         <button class="watchlistbutton"><span>+</span> Add to watchlist</button>
     </div>
