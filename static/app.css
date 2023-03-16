@@ -5,11 +5,7 @@
 :root{
   --color-light: #EDF2F4;
   --color-dark: #EDF2F4;
-  --color-dark: #EDF2F4;
-}
-
-.logo{
-  color: var(--color-light) !important;
+  --color-main: #EF233C;
 }
 
 html {font-size: 100%;} /*16px*/
@@ -19,7 +15,7 @@ body{
     font-weight: 500;
     line-height: 1.5;
     background-color: #2B2D42;
-    color: #EDF2F4;
+    color: var(--color-light);
 }
 a {
     color: rgb(208, 173, 240);
@@ -28,20 +24,16 @@ h1,h2,h3,h4,h5,h6{
     font-weight: 500;
 }
 
-
-body {
-  background: #2B2D42;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  line-height: 1.5;
-  color: #EDF2F4;
+button{
+  border-radius: 0.25em;
 }
+
+/*? Type scale */
 
 p {margin-bottom: 1rem;}
 
 h1, h2, h3, h4, h5 {
-  margin: 3rem 0 1.38rem;
-  font-family: 'Roboto', sans-serif;
+  margin: 1.38rem 0 1.38rem;
   font-weight: 700;
   line-height: 1.3;
 }

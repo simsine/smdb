@@ -4,7 +4,7 @@
     import { page } from "$app/stores";
     import { goto } from "$app/navigation"
 
-     function paginate(sign:number){
+    function paginate(sign:number){
         const currentPage = parseInt(searchParameters.searchPage)
         const totalPages = Math.ceil(searchQueryResult.totalResults/10)
         let newURL = new URL($page.url)
@@ -26,14 +26,18 @@
     $: searchQueryResult = data.searchQueryResult
     let search:SearchQueryResultSearch
     $: search = searchQueryResult.Search
+
+    $: totalPages = Math.ceil(searchQueryResult.totalResults/10)
 </script>
 
 {#if searchQueryResult.Response == "True"}
     <h2><b>Search</b> "{searchParameters.searchQuery}"</h2>
-    <p>Total results found: {searchQueryResult.totalResults}</p>
-    <button on:click={()=>{paginate(-1)}}>&lt;--</button>
-    <span>{searchParameters.searchPage} / {Math.ceil(searchQueryResult.totalResults/10)}</span>
-    <button on:click={()=>{paginate(1)}}>--&gt;</button>
+    <p>{searchQueryResult.totalResults} results found</p>
+    <div class="paginationcontainer">
+        <button on:click|preventDefault={()=>{paginate(-1)}}>&lt;--</button>
+        <span>{searchParameters.searchPage} / {totalPages}</span>
+        <button on:click|preventDefault={()=>{paginate(+1)}}>--&gt;</button>
+    </div>
     <hr>
     <section>
         {#each search as movie}
@@ -46,6 +50,16 @@
 {/if}
     
 <style>
+    .paginationcontainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+    .paginationcontainer button {
+        padding: 0.2em 0.75em 0.2em 0.75em;
+    }
+
     /*! Temp  */
     section{
         display: grid;

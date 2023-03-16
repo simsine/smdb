@@ -32,8 +32,8 @@
         font-weight: 900;
         font-size: 2em;
         text-decoration: none;
-        color: --color-light;
-        background-color: #EF233C;
+        color: var(--color-light);
+        background-color: var(--color-main);
         padding: 5px ;
         border-radius: 0.25em;
     }
