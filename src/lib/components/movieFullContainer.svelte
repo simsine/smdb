@@ -1,7 +1,16 @@
 <script lang="ts">
+    import Fa from "svelte-fa"
+    import { faPlus, faPlusCircle } from "@fortawesome/free-solid-svg-icons"
+
 	import type { MovieFull } from "$lib/types"
+	import { json } from "@sveltejs/kit"
     export let movie:MovieFull;
+    console.log(movie)
 </script>
+
+<pre>
+
+</pre>
 
 <article>
     <div>
@@ -10,18 +19,28 @@
     </div>
     <div class="movie-main">
         <img src={movie.Poster} alt="" class="movieposter">
-        <div>
-            <div class="genres">
+        <div class="movie-info">
+            <div class="movie-genres">
                 {#each movie.Genre.split(", ") as genre} <span class="genre">{genre}</span>{/each}
             </div>
             <p>{movie.Plot}</p>
             <hr>
-            <p><b>Writers</b>{#each movie.Writer.split(", ") as writer}<span class="person">{writer}</span>{/each}</p>
-            <p><b>Actors</b>{#each movie.Actors.split(", ") as actor}<span class="person">{actor}</span>{/each}</p>
+            <p><b>Writers</b>{#each movie.Writer.split(", ") as writer}<span class="infolisting">{writer}</span>{/each}</p>
+            <p><b>Actors</b>{#each movie.Actors.split(", ") as actor}<span class="infolisting">{actor}</span>{/each}</p>
             <hr>
-            <p><b>Languages</b>{movie.Language}</p>
+            <p><b>Languages</b>{#each movie.Language.split(", ") as language}<span class="infolisting">{language}</span>{/each}</p>
         </div>
-        <button class="watchlistbutton"><span>+</span> Add to watchlist</button>
+        <div class="movie-aside">
+            <button class="watchlistbutton"><Fa icon={faPlus} size="lg"/><span>Add to watchlist</span></button>
+            <a href="#critic-ratings"><p><b>{movie.Ratings.length}</b> Critic ratings</p></a>
+        </div>
+    </div>
+    <div id="critic-ratings">
+        <hr>
+        <h2>Critic ratings</h2>
+        {#each movie.Ratings as rating}
+            <h3><b>{rating.Source}</b> | {rating.Value}</h3>
+        {/each}
     </div>
 </article>
 
@@ -53,35 +72,47 @@
         }
     }
 
-    div.genres{
+    div.movie-info{
+        /* width: 70ch; */
+    }
+    div.movie-aside{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    div.movie-genres{
         display: flex;
         gap: 5px;
+        margin-bottom: 1rem;
     }
     span.genre{
         padding: 5px;
-        background-color: #202326;
+        background-color: var(--color-dark);
     }
-    span.person::before{
+    span.infolisting::before{
         content: " | ";
+    }
+    div#critic-ratings{
+        margin-top: 2em;
     }
 
     /*? Global */
     button.watchlistbutton{
-        padding: 0.75em;
-        width:25ch;
+        padding: 1em;
         color: inherit;
         border: none;
-        border-radius: 0.25em;
-        background-color: #202326;
-        font-size: 1em;
+        background-color: var(--color-dark);
+        white-space: nowrap;
+        min-width: fit-content;
     }
     button.watchlistbutton:hover{
-        background-color:#2a2d30;
+       background-color: rgba(32, 35, 38,0.8);
     }
     button.watchlistbutton:active{
         box-shadow: inset 3px 3px 2px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
     }
     button.watchlistbutton span{
+        margin-left: 0.5em;
         font-weight: 900;
     }
 </style>

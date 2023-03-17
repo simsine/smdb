@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Fa from "svelte-fa/src/fa.svelte"
-    import { faMagnifyingGlass, faUserCircle } from "@fortawesome/free-solid-svg-icons/index"
+    import Fa from "svelte-fa"
+    import { faMagnifyingGlass, faUserCircle } from "@fortawesome/free-solid-svg-icons"
 </script>
 <nav>
     <a href="/" class="logo"><span>sMDB</span></a>

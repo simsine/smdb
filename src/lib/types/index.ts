@@ -5,10 +5,6 @@ interface MovieShort {
     Type: string;
     Poster: string;
 }
-interface Rating {
-    Source:string;
-    Value:string;
-}
 interface MovieFull extends MovieShort{
     Response:string;
     Error?:string;
@@ -29,6 +25,10 @@ interface MovieFull extends MovieShort{
     imdbRating:string;
     imdbVotes:string;
     totalSeasons:string;
+}
+interface Rating {
+    Source:string;
+    Value:string;
 }
 
 interface SearchQueryResult{

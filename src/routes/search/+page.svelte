@@ -1,4 +1,7 @@
 <script lang="ts">
+    import Fa from "svelte-fa"
+    import { faArrowLeftLong, faArrowRightLong } from "@fortawesome/free-solid-svg-icons"
+
     import MovieShortContainer from "$lib/components/movieShortContainer.svelte";
 
     import { page } from "$app/stores";
@@ -34,9 +37,9 @@
     <h2><b>Search</b> "{searchParameters.searchQuery}"</h2>
     <p>{searchQueryResult.totalResults} results found</p>
     <div class="paginationcontainer">
-        <button on:click|preventDefault={()=>{paginate(-1)}}>&lt;--</button>
+        <button on:click|preventDefault={()=>{paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
         <span>{searchParameters.searchPage} / {totalPages}</span>
-        <button on:click|preventDefault={()=>{paginate(+1)}}>--&gt;</button>
+        <button on:click|preventDefault={()=>{paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
     </div>
     <hr>
     <section>

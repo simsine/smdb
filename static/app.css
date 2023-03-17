@@ -4,7 +4,7 @@
 
 :root{
   --color-light: #EDF2F4;
-  --color-dark: #EDF2F4;
+  --color-dark: #202326;
   --color-main: #EF233C;
 }
 
@@ -19,9 +19,14 @@ body{
 }
 a {
     color: rgb(208, 173, 240);
+    text-decoration: none;
 }
 h1,h2,h3,h4,h5,h6{
     font-weight: 500;
+}
+button:not([type]){
+  background-color: white;
+  border-radius: 0.25em;
 }
 
 /*? Type scale */
