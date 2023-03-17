@@ -1,3 +1,7 @@
+<script lang="ts">
+    import Fa from "svelte-fa"
+    import { faMagnifyingGlass, faUserCircle } from "@fortawesome/free-solid-svg-icons"
+</script>
 <nav>
     <a href="/" class="logo"><span>sMDB</span></a>
     <form action="/search">
@@ -8,11 +12,13 @@
             <option value="game"   >Games</option>
             <option value="episode">Episodes</option>
         </select>
-        <input placeholder="Search for movies, series, games and more..." type="text" name="s" id="s">
+        <div class="searchformrightfield">
+            <input placeholder="Search for movies, series, games and more..." type="text" name="s" id="s">
+            <button type="submit" value="Search" class="searchbutton"><Fa icon={faMagnifyingGlass} size="lg"/></button>
+        </div>
         <input type="hidden" name="p" value="1">
-        <input type="submit" value="Search">
     </form>
-    <a href="/usercontent" class="user-content">My content</a>
+    <a href="/usercontent"><Fa icon={faUserCircle} size="2.5x" color="white"/></a>
 </nav>
 
 <style>
@@ -23,8 +29,16 @@
         align-items: center;
         justify-content: flex-start;
         gap: 15px;
+    }
 
-        border-radius: 0.25em;
+    @media screen and (max-width: 450px) {
+        
+    }
+    @media screen and (min-width: 450px) and (max-width: 750px) {
+
+    }
+    @media screen and (min-width: 750px) {
+
     }
 
     .logo{
@@ -34,26 +48,33 @@
         text-decoration: none;
         color: var(--color-light);
         background-color: var(--color-main);
-        padding: 5px ;
-        border-radius: 0.25em;
-    }
-    .user-content{
-        font-size: 1.5em;
-        color: inherit;
-        text-decoration: none;
-        margin: 5px;
-        width:12ch;
+        padding: 0 0.5em 0 0.5em;
+        height: 50px;
+        border-radius: 0.25rem;
     }
     form {
+        height: 50px;
         width: 100%;
         display: flex;
         gap: 1px;
+        border-radius: 0.25em;
+    }
+    form .searchformrightfield{
+        display: flex;
+        width: 100%;
+    }
+    form button {
+        appearance: none;
+        border: unset;
+        background-color: white;
+        cursor: pointer;
+        padding: 0 1em 0 1em;
     }
     form select{
         border-top-left-radius: 0.25em;
         border-bottom-left-radius: 0.25em;
     }
-    form input:last-of-type{
+    form button{
         border-top-right-radius: 0.25em;
         border-bottom-right-radius: 0.25em;
     }
@@ -64,8 +85,5 @@
     }
     form input[type=text]{
         width: 100%;
-    }
-    form input[type=submit]:hover{
-        cursor: pointer;
     }
 </style>
