@@ -9,9 +9,9 @@ declare global {
 	}
 }
 
-export {};
+export {}
 
 // svelte-fa
-declare module '@fortawesome/free-solid-svg-icons/index.js' {
-	export * from '@fortawesome/free-solid-svg-icons';
-  }
+declare module "@fortawesome/free-solid-svg-icons/index.js" {
+	export * from "@fortawesome/free-solid-svg-icons"
+}
