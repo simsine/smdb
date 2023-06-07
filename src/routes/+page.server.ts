@@ -8,6 +8,9 @@ export const load = (async () => {
 		where: {
 			isPublished: true,
 		},
+		orderBy: {
+			date: "desc",
+		},
 	})
 	console.log(news)
 	return { news }
