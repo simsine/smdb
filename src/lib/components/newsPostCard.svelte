@@ -13,8 +13,11 @@
 
 <style>
 	article {
-		outline: auto;
+		/* outline: auto; */
 		margin: 3rem 0;
 		padding: 3rem 1.5rem;
+		background-color: hwb(235 17% 76% / 1);
+		box-shadow: var(--box-shadow);
+		border-radius: 0.25rem;
 	}
 </style>
