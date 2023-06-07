@@ -24,7 +24,7 @@
 
 <style>
 	nav {
-		margin: 15px 30px 15px 30px;
+		margin: 15px 100px 15px 100px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;

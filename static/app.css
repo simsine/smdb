@@ -5,7 +5,7 @@
 :root {
 	--color-light: #edf2f4;
 	--color-dark: #202326;
-	--color-main: #ef233c;
+	--color-main: rgb(239, 35, 60);
 }
 
 html {
@@ -47,7 +47,7 @@ h2,
 h3,
 h4,
 h5 {
-	margin: 1.38rem 0 1.38rem;
+	/* margin: 1.38rem 0 1.38rem; */
 	font-weight: 700;
 	line-height: 1.3;
 }
@@ -76,4 +76,8 @@ h5 {
 small,
 .text_small {
 	font-size: 0.8rem;
+}
+
+hr {
+	border-color: rgba(237, 242, 244, 0.25);
 }

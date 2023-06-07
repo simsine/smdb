@@ -1,6 +1,5 @@
 <script>
 	import { base } from "$app/paths"
-	import { page } from "$app/stores"
 </script>
 
 <h1>My page</h1>
