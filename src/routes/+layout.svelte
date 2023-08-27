@@ -1,8 +1,11 @@
 <script lang="ts">
 	import Navbar from "$lib/components/navbar.svelte"
+	export let data
+	import { page } from "$app/stores"
+	const username = $page.data.user.name
 </script>
 
-<Navbar />
+<Navbar {username} />
 
 <main>
 	<slot />

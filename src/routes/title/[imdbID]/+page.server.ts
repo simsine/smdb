@@ -7,7 +7,5 @@ export const load = (async ({ fetch, params }) => {
 	let response = await fetch(`${SECRET_APIBASEURL}?apikey=${SECRET_APIKEY}&i=${imdbID}`)
 	let movieFull = await response.json()
 
-	// console.log(movieFull)
-
 	return { imdbID, movieFull }
 }) satisfies PageServerLoad

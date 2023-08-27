@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Fa from "svelte-fa"
 	import { faMagnifyingGlass, faUserCircle } from "@fortawesome/free-solid-svg-icons"
+
+	export let username
 </script>
 
 <nav>
@@ -19,7 +21,7 @@
 		</div>
 		<input type="hidden" name="p" value="1" />
 	</form>
-	<a href="/usercontent"><Fa icon={faUserCircle} size="2.5x" color="white" /></a>
+	<a href="/user/{username}"><Fa icon={faUserCircle} size="2.5x" color="white" /></a>
 </nav>
 
 <style>

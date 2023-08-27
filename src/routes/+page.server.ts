@@ -1,10 +1,8 @@
 import type { PageServerLoad } from "./$types"
-import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient()
+import pc from "$lib/prisma"
 
 export const load = (async () => {
-	let news = await prisma.news.findMany({
+	let news = await pc.news.findMany({
 		where: {
 			isPublished: true,
 		},
@@ -12,6 +10,5 @@ export const load = (async () => {
 			date: "desc",
 		},
 	})
-	console.log(news)
 	return { news }
 }) satisfies PageServerLoad
