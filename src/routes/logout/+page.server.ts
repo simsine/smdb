@@ -16,6 +16,6 @@ export const actions: Actions = {
 		})
 
 		// redirect the user
-		throw redirect(302, "/login")
+		throw redirect(302, "/")
 	},
 }

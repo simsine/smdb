@@ -1,13 +1,8 @@
 <script lang="ts">
 	import Navbar from "$lib/components/navbar.svelte"
-	import { page } from "$app/stores"
-
-	const username = $page.data.user.name
 </script>
 
-{#if $page.data.user.name}
-	<Navbar {username} />
-{/if}
+<Navbar />
 
 <main>
 	<slot />

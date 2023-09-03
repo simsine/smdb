@@ -1,14 +1,17 @@
 import type { PageServerLoad } from "./$types"
 import pc from "$lib/prisma"
+import { error } from "@sveltejs/kit"
 
 export const load = (async ({ fetch, params }) => {
-	let username = params.username
-
-	let user = pc.user.findUnique({
+	let user = await pc.user.findUnique({
 		where: {
-			username: username,
+			username: params.username,
 		},
 	})
+
+	if (user == null) {
+		throw error(404, { message: "User not found" })
+	}
 
 	return { user }
 }) satisfies PageServerLoad
