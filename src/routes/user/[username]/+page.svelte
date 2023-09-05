@@ -8,8 +8,4 @@
 <p>Joined at: {data.user.createdAt}</p>
 
 <style>
-	section {
-		display: flex;
-		gap: 15px;
-	}
 </style>
