@@ -17,6 +17,8 @@
 		<input id="password" name="password" type="password" required />
 	</div>
 
+	<a href="/register"><p>register</p></a>
+
 	{#if form?.invalid}
 		<p class="error">Username and password is required.</p>
 	{/if}
