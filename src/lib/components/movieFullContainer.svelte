@@ -3,9 +3,7 @@
 	import { faPlus, faStar } from "@fortawesome/free-solid-svg-icons"
 
 	import type { MovieFull } from "$lib/types"
-
 	export let movie: MovieFull
-	console.log(movie)
 </script>
 
 <article>
@@ -15,7 +13,7 @@
 			<p>{movie.Type} | {movie.Year} | {movie.Rated} | {movie.Runtime}</p>
 		</div>
 		<div class="sMDB-rating">
-			<span><b>sMDB rating</b></span>
+			<span><b>IMDb rating</b></span>
 			<span>
 				<span class="star-rating"><Fa icon={faStar} /></span>
 				<b>{movie.imdbRating}</b>/10
@@ -44,6 +42,7 @@
 		</div>
 		<div class="movie-aside">
 			<button class="watchlistbutton"><Fa icon={faPlus} size="lg" /><span>Add to favorites</span></button>
+			<button class="watchlistbutton"><Fa icon={faPlus} size="lg" /><span>Write review</span></button>
 			<a href="#critic-ratings"><p><b>{movie.Ratings.length}</b> Critic ratings</p></a>
 		</div>
 	</div>
@@ -60,7 +59,7 @@
 
 	div.movie-header {
 		display: flex;
-		justify-content: space-between;
+		justify-content: left;
 	}
 	.sMDB-rating {
 		padding: 0.5rem 1rem;
