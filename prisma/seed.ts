@@ -12,27 +12,15 @@ async function main() {
 			username: "bjarne",
 			passwordHash: await bcrypt.hash("bjarne_er_best_123", 10),
 			userAuthToken: crypto.randomUUID(),
-			profile: {
+			reviews: {
 				create: {
-					reviews: {
-						create: {
-							imdbID: "tt1475582",
-							content: "Masterpiece",
-							rating: 5,
-						},
-					},
+					imdbID: "tt1475582",
+					content: "Masterpiece",
+					rating: 5,
 				},
 			},
 		},
 	})
-
-	// const bjarne_profile = await pc.userProfile.upsert({
-	// 	where:{userId: bjarne.id},
-	// 	update:{},
-	// 	create:{
-
-	// 	}
-	// })
 
 	const newspost = await pc.news.upsert({
 		where: { id: 1 },
@@ -40,7 +28,8 @@ async function main() {
 		create: {
 			title: "Developers, developers, developers...",
 			markdown:
-				"Hi, this is a post that has been seeded to the development database, if you see this then you have most likely done something right!",
+				"Hi, this is a post that has been seeded to the development database,\
+				if you see this then you have most likely done something right!",
 		},
 	})
 	console.log(bjarne, newspost)

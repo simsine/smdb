@@ -27,25 +27,22 @@ model User {
   createdAt DateTime   @default(now())
   isAdmin   Boolean    @default(false)
 
-  profile UserProfile?
-}
-model UserProfile {
-  id        String    @id @default(uuid())
-  userId    String    @unique
-  user      User      @relation(fields: [userId], references: [id])
-
   reviews   Review[]
 }
 
 model Review {
   id        String     @id @default(uuid())
   
-  authorId  String
-  author    UserProfile @relation(fields: [authorId], references: [id])
+  authorId  String     
+  author    User       @relation(fields: [authorId], references: [id])
   
   imdbID    String     
+
+  title     String
   content   String?
   rating    Int
   
   createdAt DateTime   @default(now())
+
+  @@unique([authorId, imdbID])
 }

@@ -1,16 +1,34 @@
 <script lang="ts">
 	import Fa from "svelte-fa"
-	import { faMagnifyingGlass, faUserCircle, faSignOut } from "@fortawesome/free-solid-svg-icons"
+	import { faMagnifyingGlass, faUserCircle, faSignOut, faSignIn, faX, faXmark } from "@fortawesome/free-solid-svg-icons"
 
 	import { page } from "$app/stores"
-	const username = $page.data.user?.name // Setting this to const because it becomes undefined if it is made reactive for some god forsaken reason
-
-	import { enhance } from "$app/forms"
+	const username = $page.data.user?.name // Setting this to const because it becomes undefined if it is made reactive for some god forsaken reasons
+	let showMobileSearch = false
 </script>
 
 <nav>
-	<a href="/" class="logo"><span>sMDB</span></a>
+	{#if showMobileSearch}
 	<form action="/search" class="search-form">
+		<select name="f" id="f" title="Filter">
+			<option value="">All</option>
+			<option value="movie">Movies</option>
+			<option value="series">Series</option>
+			<option value="game">Games</option>
+			<option value="episode">Episodes</option>
+		</select>
+		<div class="searchformrightfield">
+			<input placeholder="Search" type="text" name="s" id="s" />
+			<button type="submit" value="Search" class="searchbutton" title="Search"><Fa icon={faMagnifyingGlass} size="lg" /></button>
+		</div>
+		<input type="hidden" name="p" value="1" />
+	</form>
+	<button on:click={()=>{showMobileSearch = !showMobileSearch}}>
+		<Fa icon={faXmark} size="2.5x" color="white" />
+	</button>
+	{:else}
+	<a href="/" class="logo"><span>sMDB</span></a>
+	<form action="/search" class="search-form desktop">
 		<select name="f" id="f" title="Filter">
 			<option value="">All</option>
 			<option value="movie">Movies</option>
@@ -24,21 +42,24 @@
 		</div>
 		<input type="hidden" name="p" value="1" />
 	</form>
+	<button on:click={()=>{showMobileSearch = !showMobileSearch}}>
+		<Fa icon={faMagnifyingGlass} size="2.5x" color="white" />
+	</button>
 	{#if username}
 		<a href="/user/{username}" title="Profile"><Fa icon={faUserCircle} size="2.5x" color="white" /></a>
 
 		<!-- We need to send a form action to the logout api route -->
-		<form action="/logout" method="POST" use:enhance>
+		<form action="/logout" method="POST">
 			<button type="submit" title="Log out"><Fa icon={faSignOut} size="2.5x" color="white" /></button>
 		</form>
 	{:else}
-		<a href="/login">Sign in</a>
+		<a href="/login"><Fa icon={faSignIn} size="2.5x" color="white" /></a>
+	{/if}
 	{/if}
 </nav>
 
 <style>
 	nav {
-		margin: 15px 100px 15px 100px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -47,6 +68,10 @@
 	}
 
 	@media screen and (max-width: 450px) {
+		form.desktop {
+			display:none !important;
+		}
+		
 	}
 	@media screen and (min-width: 450px) and (max-width: 750px) {
 	}
@@ -75,7 +100,7 @@
 		display: flex;
 		width: 100%;
 	}
-	form button {
+	button {
 		appearance: none;
 		border: unset;
 		cursor: pointer;

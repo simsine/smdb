@@ -7,6 +7,9 @@ export const load = (async ({ params }) => {
 		where: {
 			username: params.username,
 		},
+		include: {
+			reviews: { take: 10 },
+		},
 	})
 
 	if (user == null) {

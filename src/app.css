@@ -6,6 +6,7 @@
 	--color-light: #edf2f4;
 	--color-dark: #202326;
 	--color-main: rgb(239, 35, 60);
+	--color-secondary: #2b2d42;
 	--box-shadow: 0 3px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
@@ -13,11 +14,12 @@ html {
 	font-size: 100%;
 } /*16px*/
 
-body {
+body,
+dialog {
 	font-family: "Roboto", sans-serif;
 	font-weight: 500;
 	line-height: 1.5;
-	background-color: #2b2d42;
+	background-color: var(--color-secondary);
 	color: var(--color-light);
 }
 a {
@@ -81,4 +83,18 @@ small,
 
 hr {
 	border-color: rgba(237, 242, 244, 0.25);
+}
+
+dialog {
+	border-color: rgba(237, 242, 244, 0.25);
+	border-radius: 0.25em;
+}
+dialog form {
+	padding: 5px;
+}
+
+.vertical-flex {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
 }

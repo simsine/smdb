@@ -1,15 +1,25 @@
 <script lang="ts">
 	import Navbar from "$lib/components/navbar.svelte"
+
+	import "../app.css"
 </script>
 
-<Navbar />
 
-<main>
+<div>
+	<Navbar />
 	<slot />
-</main>
+</div>
 
 <style>
-	main {
+	div {
 		margin: 15px 100px 15px 100px;
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+	@media screen and (max-width: 450px) {
+		div {
+			margin: 15px;
+		}
 	}
 </style>
