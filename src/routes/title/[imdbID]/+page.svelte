@@ -168,11 +168,6 @@
 		flex-direction: column;
 		gap: 0.5rem;
 	}
-	.horizontal-flex {
-		display: flex;
-		flex-direction: row;
-		gap: 0.5rem;
-	}
 	div.movie-genres {
 		display: flex;
 		gap: 5px;
