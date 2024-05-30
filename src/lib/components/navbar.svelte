@@ -42,19 +42,19 @@
 		</div>
 		<input type="hidden" name="p" value="1" />
 	</form>
-	<button on:click={()=>{showMobileSearch = !showMobileSearch}}>
+	{#if username}
+	<a href="/user/{username}" title="Profile"><Fa icon={faUserCircle} size="2.5x" color="white" /></a>
+	
+	<!-- We need to send a form action to the logout api route -->
+	<form action="/logout" method="POST">
+		<button type="submit" title="Log out"><Fa icon={faSignOut} size="2.5x" color="white" /></button>
+	</form>
+	{:else}
+	<a href="/login"><Fa icon={faSignIn} size="2.5x" color="white" /></a>
+	{/if}
+	<button class="mobile-search-button"  on:click={()=>{showMobileSearch = !showMobileSearch}}>
 		<Fa icon={faMagnifyingGlass} size="2.5x" color="white" />
 	</button>
-	{#if username}
-		<a href="/user/{username}" title="Profile"><Fa icon={faUserCircle} size="2.5x" color="white" /></a>
-
-		<!-- We need to send a form action to the logout api route -->
-		<form action="/logout" method="POST">
-			<button type="submit" title="Log out"><Fa icon={faSignOut} size="2.5x" color="white" /></button>
-		</form>
-	{:else}
-		<a href="/login"><Fa icon={faSignIn} size="2.5x" color="white" /></a>
-	{/if}
 	{/if}
 </nav>
 
@@ -63,7 +63,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-content: flex-start;
+		justify-content: space-between;
 		gap: 15px;
 	}
 
@@ -71,7 +71,9 @@
 		form.desktop {
 			display:none !important;
 		}
-		
+		.mobile-search-button {
+			display: block !important;; 
+		}
 	}
 	@media screen and (min-width: 450px) and (max-width: 750px) {
 	}
@@ -127,5 +129,8 @@
 	}
 	form.search-form input[type="text"] {
 		width: 100%;
+	}
+	.mobile-search-button {
+		display: none;
 	}
 </style>
