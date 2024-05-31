@@ -42,7 +42,7 @@
 		</div>
 		<input type="hidden" name="p" value="1" />
 	</form>
-	{#if username}
+	{#if username}<!-- User is logged in, show profile and logout-->
 	<a href="/user/{username}" title="Profile"><Fa icon={faUserCircle} size="2.5x" color="white" /></a>
 	
 	<!-- We need to send a form action to the logout api route -->

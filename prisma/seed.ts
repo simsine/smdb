@@ -5,6 +5,26 @@ import bcrypt from "bcrypt"
 
 async function main() {
 	//* We use the prisma orm upsert method to seed the database with entries
+
+	const admin = await pc.user.upsert({
+		where: { username: "admin" },
+		update: {},
+		create: {
+			username: "admin",
+			passwordHash: await bcrypt.hash("admin", 10),
+			userAuthToken: crypto.randomUUID(),
+			isAdmin: true,
+			reviews: {
+				create: {
+					imdbID: "tt8524868",
+					title: "Mmmmyess",
+					content: "now this is for me",
+					rating: 10,
+				},
+			},
+		},
+	})
+
 	const bjarne = await pc.user.upsert({
 		where: { username: "bjarne" },
 		update: {},
@@ -15,7 +35,8 @@ async function main() {
 			reviews: {
 				create: {
 					imdbID: "tt1475582",
-					content: "Masterpiece",
+					title: "Masterpiece",
+					content: "Yeah is aight",
 					rating: 5,
 				},
 			},
@@ -32,7 +53,8 @@ async function main() {
 				if you see this then you have most likely done something right!",
 		},
 	})
-	console.log(bjarne, newspost)
+	console.info("Database seeded with the following rows:")
+	console.info(admin, bjarne, newspost)
 }
 main()
 	.then(async () => {
