@@ -19,7 +19,11 @@ export const load = (async ({ fetch, params, locals }) => {
 			imdbID: movie.imdbID,
 		},
 		include: {
-			author: true,
+			author: {
+				select: {
+					username: true,
+				},
+			},
 		},
 	})
 
@@ -30,9 +34,6 @@ export const load = (async ({ fetch, params, locals }) => {
 			where: {
 				imdbID: movie.imdbID,
 				authorId: locals.user.id,
-			},
-			include: {
-				author: true,
 			},
 		})
 	}
@@ -53,7 +54,7 @@ export const actions = {
 
 		const rating = parseInt(data.get("rating") as any)
 		if (rating == null) return { error: "Review must include rating" }
-		if (rating < 1 || rating > 10) return { error: "Rating must be between 1-5" }
+		if (rating < 1 || rating > 10) return { error: "Rating must be between 1-10" }
 
 		await pc.review.upsert({
 			where: {
