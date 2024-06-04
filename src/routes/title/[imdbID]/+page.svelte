@@ -79,7 +79,7 @@
 				<label for="rating">
 					Rating <span class="star-rating"><Fa icon={faStar}/></span>
 				</label>
-				<select name="rating" id="rating" title="Rating" required>
+				<select name="rating" id="rating" title="Rating" required value={userReview?.rating.toString() ?? ""}>
 					<option value="">Select</option>
 					<option value="10">10</option>
 					<option value="9">9</option>
@@ -92,14 +92,13 @@
 					<option value="2">2</option>
 					<option value="1">1</option>
 				</select>
-				<input type="submit" value="Submit review">	
+				<div style="display: flex; gap:0.5em;">
+					<button type="button" on:click={closeReviewModal}>Cancel</button>
+					<button form="delete-review">Delete review</button>
+					<button type="submit">Submit review</button>
+				</div>
 			</form>
-			<form class="vertical-flex" action="?/deleteReview" method="post">
-				<input type="submit" value="Delete review">
-			</form>
-			<form class="vertical-flex">
-				<input type="button" value="Cancel" on:click={closeReviewModal}>
-			</form>
+			<form class="vertical-flex" action="?/deleteReview" method="post" id="delete-review"></form>
 		</dialog>
 		{#each reviews as review}
 			<h3>
@@ -200,5 +199,8 @@
 	button.watchlistbutton span {
 		margin-left: 0.5em;
 		font-weight: 900;
+	}
+	textarea {
+		resize: none;
 	}
 </style>
