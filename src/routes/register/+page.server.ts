@@ -40,7 +40,7 @@ const register: Action = async ({ request }) => {
 		},
 	})
 
-	throw redirect(303, "/login")
+	redirect(303, "/login");
 }
 
 export const actions: Actions = { register }
