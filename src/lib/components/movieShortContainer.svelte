@@ -3,16 +3,21 @@
 	export let movie: MovieShort
 </script>
 
-<article>
-	<div class="imagewrapper"><a href="/title/{movie.imdbID}"><img src={movie.Poster} alt=""></a></div>
-	<hr>
-	<div class="textwrapper">
-		<b>{movie.Title}</b><br>
-		<small>{movie.Type} | {movie.Year}</small>
-	</div>
-</article>
+<a href="/title/{movie.imdbID}">
+	<article>
+		<div class="imagewrapper"><img src={movie.Poster} alt=""></div>
+		<hr>
+		<div class="textwrapper">
+			<b>{movie.Title}</b><br>
+			<small>{movie.Type} | {movie.Year}</small>
+		</div>
+	</article>
+</a>
 
 <style>
+	a  {
+		color: unset;
+	}
 	article {
 		background-color: var(--color-dark);
 		border-radius: 1em;
