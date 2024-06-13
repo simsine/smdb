@@ -6,6 +6,7 @@
 	--color-light: #edf2f4;
 	--color-dark: #202326;
 	--color-main: rgb(239, 35, 60);
+	--color-main-muted: rgba(239, 35, 59, 0.85);
 	--color-secondary: #2b2d42;
 	--box-shadow: 0 3px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
@@ -93,8 +94,28 @@ dialog form {
 	padding: 5px;
 }
 
-.vertical-flex {
-	display: flex;
-	flex-direction: row;
-	gap: 0.5rem;
+input {
+	padding: 0.2em;
+}
+
+/*? Global */
+button.watchlistbutton {
+	padding: 1em;
+	color: inherit;
+	border: none;
+	background-color: var(--color-main);
+	white-space: nowrap;
+	min-width: fit-content;
+	margin: 0.5rem 0 0.5rem 0;
+}
+button.watchlistbutton:hover {
+	background-color: var(--color-main-muted);
+	cursor: pointer;
+}
+button.watchlistbutton:active {
+	box-shadow: inset 3px 3px 2px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+button.watchlistbutton span {
+	margin-left: 0.5em;
+	font-weight: 900;
 }
