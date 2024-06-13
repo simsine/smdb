@@ -3,8 +3,9 @@
 	import { faPlus, faStar } from "@fortawesome/free-solid-svg-icons"
 	import { goto } from "$app/navigation"
 	import { enhance, applyAction } from "$app/forms"
-
+	
 	export let data
+	export let form
 	let isLoggedIn = data.isLoggedIn
 	let movie = data.movie
 	let reviews = data.reviews
@@ -43,8 +44,6 @@
 			</div>
 				<form action="?/upsertWatchStatus" method="post" class="watch-status-form horizontal-flex" bind:this={userTitleStatusForm} use:enhance={() => {
 					return async ({result}) => {
-						// @ts-ignore
-						userTitleStatus = result.data
 						applyAction(result)
 					}
 				}}>
@@ -54,7 +53,7 @@
 						<input type="hidden" name="currentSeason" value="0">
 						<input type="hidden" name="currentEpisode" value="0">
 					{:else}
-						<select name="watchStatus" title="Watch status" value={userTitleStatus.watchStatus} on:change={onChangeSubmitUserTitleStatus}>
+						<select name="watchStatus" title="Watch status" value={form?.watchStatus ?? userTitleStatus.watchStatus} on:change={onChangeSubmitUserTitleStatus}>
 							<option value="PLAN_TO_WATCH">Plan to watch</option>
 							<option value="WATCHING">Watching</option>
 							<option value="ON_HOLD">On hold</option>
@@ -62,30 +61,24 @@
 							<option value="COMPLETED">Completed</option>
 						</select>
 						<label for="currentSeason">Season
-							<input type="number" inputmode="numeric" name="currentSeason" title="Current season" min="0" max="9999" value={userTitleStatus.currentSeason} size="6" on:change={onChangeSubmitUserTitleStatus}>
+							<input type="number" inputmode="numeric" name="currentSeason" title="Current season" min="0" max="9999" value={form?.currentSeason ?? userTitleStatus.currentSeason} size="6" on:change={onChangeSubmitUserTitleStatus}>
 						</label>
 						<label for="currentSeason">Episode
-							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={userTitleStatus.currentEpisode} size="6" on:change={onChangeSubmitUserTitleStatus}>
+							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={form?.currentEpisode ?? userTitleStatus.currentEpisode} size="6" on:change={onChangeSubmitUserTitleStatus}>
 						</label>
 					{/if}
 				</form>
 			<hr>
 			<p>{movie.Plot}</p>
 			<hr />
-			<p>
-				<b>Writers</b>{#each movie.Writer.split(", ") as writer}<span class="infolisting">{writer}</span>{/each}
-			</p>
-			<p>
-				<b>Actors</b>{#each movie.Actors.split(", ") as actor}<span class="infolisting">{actor}</span>{/each}
-			</p>
+			<p><b>Writers</b>{#each movie.Writer.split(", ") as writer}<span class="infolisting">{writer}</span>{/each}</p>
+			<p><b>Actors</b>{#each movie.Actors.split(", ") as actor}<span class="infolisting">{actor}</span>{/each}</p>
 			<hr />
-			<p>
-				<b>Languages</b>{#each movie.Language.split(", ") as language}<span class="infolisting">{language}</span>{/each}
-			</p>
+			<p><b>Languages</b>{#each movie.Language.split(", ") as language}<span class="infolisting">{language}</span>{/each}</p>
 		</div>
-		<aside class="">
+		<aside>
 			<div class="">
-				<h2><b>Ratings</b></h2>
+				<h2><b>Ratings</b> <span class="star-rating"><Fa icon={faStar} size="xs"/></span></h2>
 				<hr>
 			{#each movie.Ratings as rating}
 				<p><b>{rating.Source}</b></p>	
@@ -93,13 +86,6 @@
 			{:else}
 				<p>We found no external ratings ;(</p>
 			{/each}
-			
-				<!-- <span>
-				<b>{movie.imdbRating}</b>/10
-				<span class="star-rating"><Fa icon={faStar}/></span>
-				</span>
-				<span>{movie.imdbVotes} votes</span>
-				<a href="#critic-ratings"><p><b>{movie.Ratings.length}</b> Critic ratings</p></a> -->
 			</div>
 		</aside>
 	</main>
@@ -153,12 +139,6 @@
 			<p>No reviews for this {movie.Type} yet :(</p>
 		{/each}
 	</div>
-	<!-- <div id="critic-ratings">
-		<h2>Critic ratings</h2>
-		{#each movie.Ratings as rating}
-			<h3><b>{rating.Source}</b> | {rating.Value}</h3>
-		{/each}
-	</div> -->
 </article>
 
 <style>
@@ -169,11 +149,6 @@
 	}
 	.movie-info {
 		flex: 1;
-	}
-	.sMDB-rating {
-		padding: 0.5rem 1rem;
-		display: flex;
-		flex-direction: column;
 	}
 	.star-rating {
 		color: var(--color-main);
@@ -194,9 +169,6 @@
 		main {
 			flex-direction: column;
 		}
-		aside.vertical-flex {
-			flex-direction: row-reverse;
-		}
 
 		img.movieposter {
 			width: 100%;
@@ -208,9 +180,6 @@
 	@media screen and (min-width: 450px) and (max-width: 750px) {
 		main {
 			flex-direction: column;
-		}
-		img.movieposter {
-			/* width: 50%; */
 		}
 	}
 	@media screen and (min-width: 750px) {

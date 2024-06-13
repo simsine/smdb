@@ -18,22 +18,12 @@ html {
 body,
 dialog {
 	font-family: "Roboto", sans-serif;
-	font-weight: 500;
-	line-height: 1.5;
 	background-color: var(--color-secondary);
 	color: var(--color-light);
 }
 a {
 	color: rgb(208, 173, 240);
 	text-decoration: none;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-weight: 500;
 }
 button:not([type]) {
 	background-color: white;

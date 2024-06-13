@@ -1,8 +1,8 @@
 <script lang="ts">
+	import type { News } from "@prisma/client"
 	import SvelteMarkdown from "svelte-markdown"
 
-	import type { PageData } from "./$types"
-	export let newspost: PageData
+	export let newspost: News
 
 	let date = new Date(newspost.date)
 </script>
