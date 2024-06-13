@@ -13,7 +13,7 @@ export const load = (async ({ params }) => {
 	})
 
 	if (user == null) {
-		throw error(404, { message: "User not found" })
+		error(404, { message: "User not found" });
 	}
 
 	return { user }

@@ -12,7 +12,7 @@ export const load = (async ({ fetch, params, locals }) => {
 	let movie: MovieFull = await response.json()
 
 	if (movie.Response !== "True") {
-		throw error(404, { message: (movie.Error ??= "Movie with id " + imdbID + " not found") })
+		error(404, { message: (movie.Error ??= "Movie with id " + imdbID + " not found") });
 	}
 
 	let reviews = await pc.review.findMany({
@@ -51,18 +51,18 @@ export const load = (async ({ fetch, params, locals }) => {
 
 export const actions = {
 	upsertWatchStatus: async (event) => {
-		if (!event.locals.user) throw redirect(302, "/login")
+		if (!event.locals.user) redirect(302, "/login");
 
 		const data = await event.request.formData()
 
 		let watchStatus = data.get("watchStatus") as WatchStatus
-		if (!Object.values(WatchStatus).includes(watchStatus)) throw error(400, { message: "Watch status is invalid" })
+		if (!Object.values(WatchStatus).includes(watchStatus)) error(400, { message: "Watch status is invalid" });
 
 		let currentSeason = parseInt(data.get("currentSeason") as string)
-		if (isNaN(currentSeason)) throw error(400, { message: "currentSeason is not a valid number" })
+		if (isNaN(currentSeason)) error(400, { message: "currentSeason is not a valid number" });
 
 		let currentEpisode = parseInt(data.get("currentEpisode") as string)
-		if (isNaN(currentEpisode)) throw error(400, { message: "currentEpisode is not a valid number" })
+		if (isNaN(currentEpisode)) error(400, { message: "currentEpisode is not a valid number" });
 
 		const userTitleStatus = await pc.userTitleStatus.upsert({
 			where: {
@@ -85,7 +85,7 @@ export const actions = {
 		return userTitleStatus
 	},
 	upsertReview: async (event) => {
-		if (!event.locals.user) throw error(404, { message: "User not logged in" })
+		if (!event.locals.user) error(404, { message: "User not logged in" });
 
 		const data = await event.request.formData()
 
@@ -95,8 +95,8 @@ export const actions = {
 		const content = data.get("content") as string | null
 
 		const rating = parseInt(data.get("rating") as string)
-		if (isNaN(rating)) throw error(404, { message: "Review must include rating" })
-		if (rating < 1 || rating > 10) throw error(404, { message: "Rating must be between 1-10" })
+		if (isNaN(rating)) error(404, { message: "Review must include rating" });
+		if (rating < 1 || rating > 10) error(404, { message: "Rating must be between 1-10" });
 
 		await pc.review.upsert({
 			where: {
@@ -120,7 +120,7 @@ export const actions = {
 		})
 	},
 	deleteReview: async (event) => {
-		if (!event.locals.user) throw error(404, { message: "User not logged in" })
+		if (!event.locals.user) error(404, { message: "User not logged in" });
 		await pc.review.delete({
 			where: {
 				authorId_imdbID: {
