@@ -1,11 +1,12 @@
-interface MovieShort {
+// Types for responses from OMDB API
+export interface MovieShort {
 	Title: string
 	Year: string
 	imdbID: string
 	Type: string
 	Poster: string
 }
-interface MovieFull extends MovieShort {
+export interface MovieFull extends MovieShort {
 	Response: string
 	Error?: string
 
@@ -26,17 +27,15 @@ interface MovieFull extends MovieShort {
 	imdbVotes: string
 	totalSeasons: string
 }
-interface Rating {
+export interface Rating {
 	Source: string
 	Value: string
 }
 
-interface SearchQueryResult {
+export interface SearchQueryResult {
 	Search: SearchQueryResultSearch
 	totalResults: number
 	Response: string
 	Error?: string
 }
-type SearchQueryResultSearch = Array<MovieShort>
-
-export type { MovieShort, MovieFull, SearchQueryResult, SearchQueryResultSearch }
+export type SearchQueryResultSearch = Array<MovieShort>

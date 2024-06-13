@@ -1,7 +1,8 @@
 import type { PageServerLoad } from "./$types"
 import { SECRET_APIKEY } from "$env/static/private"
 import type { MovieFull } from "$lib/types"
-import { error } from "@sveltejs/kit"
+import { WatchStatus } from "@prisma/client"
+import { error, redirect } from "@sveltejs/kit"
 import pc from "$lib/prisma"
 
 export const load = (async ({ fetch, params, locals }) => {
@@ -29,6 +30,7 @@ export const load = (async ({ fetch, params, locals }) => {
 
 	let isLoggedIn = locals.user != null
 	let userReview
+	let userTitleStatus
 	if (isLoggedIn) {
 		userReview = await pc.review.findFirst({
 			where: {
@@ -36,14 +38,54 @@ export const load = (async ({ fetch, params, locals }) => {
 				authorId: locals.user.id,
 			},
 		})
+		userTitleStatus = await pc.userTitleStatus.findFirst({
+			where: {
+				imdbID: movie.imdbID,
+				userId: locals.user.id,
+			},
+		})
 	}
 
-	return { movie, reviews, userReview, isLoggedIn }
+	return { movie, reviews, userReview, userTitleStatus, isLoggedIn }
 }) satisfies PageServerLoad
 
 export const actions = {
+	upsertWatchStatus: async (event) => {
+		if (!event.locals.user) throw redirect(302, "/login")
+
+		const data = await event.request.formData()
+
+		let watchStatus = data.get("watchStatus") as WatchStatus
+		if (!Object.values(WatchStatus).includes(watchStatus)) throw error(400, { message: "Watch status is invalid" })
+
+		let currentSeason = parseInt(data.get("currentSeason") as string)
+		if (isNaN(currentSeason)) throw error(400, { message: "currentSeason is not a valid number" })
+
+		let currentEpisode = parseInt(data.get("currentEpisode") as string)
+		if (isNaN(currentEpisode)) throw error(400, { message: "currentEpisode is not a valid number" })
+
+		const userTitleStatus = await pc.userTitleStatus.upsert({
+			where: {
+				userId_imdbID: {
+					userId: event.locals.user.id,
+					imdbID: event.params.imdbID,
+				},
+			},
+			update: {
+				watchStatus: watchStatus,
+				currentSeason: currentSeason,
+				currentEpisode: currentEpisode,
+			},
+			create: {
+				userId: event.locals.user.id,
+				imdbID: event.params.imdbID,
+				watchStatus: watchStatus,
+			},
+		})
+		return userTitleStatus
+	},
 	upsertReview: async (event) => {
-		if (!event.locals.user) return { error: "User not logged in" }
+		if (!event.locals.user) throw error(404, { message: "User not logged in" })
 
 		const data = await event.request.formData()
 
@@ -52,9 +94,9 @@ export const actions = {
 
 		const content = data.get("content") as string | null
 
-		const rating = parseInt(data.get("rating") as any)
-		if (rating == null) return { error: "Review must include rating" }
-		if (rating < 1 || rating > 10) return { error: "Rating must be between 1-10" }
+		const rating = parseInt(data.get("rating") as string)
+		if (isNaN(rating)) throw error(404, { message: "Review must include rating" })
+		if (rating < 1 || rating > 10) throw error(404, { message: "Rating must be between 1-10" })
 
 		await pc.review.upsert({
 			where: {
@@ -78,7 +120,7 @@ export const actions = {
 		})
 	},
 	deleteReview: async (event) => {
-		if (!event.locals.user) return { error: "User not logged in" }
+		if (!event.locals.user) throw error(404, { message: "User not logged in" })
 		await pc.review.delete({
 			where: {
 				authorId_imdbID: {

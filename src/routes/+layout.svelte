@@ -17,7 +17,7 @@
 		flex-direction: column;
 		gap: 15px;
 	}
-	@media screen and (max-width: 450px) {
+	@media screen and (max-width: 750px) {
 		div {
 			margin: 15px;
 		}

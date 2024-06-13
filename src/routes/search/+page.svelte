@@ -34,28 +34,25 @@
 </script>
 
 {#if searchQueryResult.Response == "True"}
-	<h2><b>Search</b> "{searchParameters.searchQuery}"</h2>
-	<p>{searchQueryResult.totalResults} results found</p>
+	<h3><b>Search:</b> "{searchParameters.searchQuery}", found {searchQueryResult.totalResults} results</h3>
+
 	<div class="paginationcontainer">
-		<button
-			on:click|preventDefault={() => {
-				paginate(-1)
-			}}><Fa icon={faArrowLeftLong} /></button
-		>
+		<button class="watchlistbutton" on:click|preventDefault={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
 		<span>{searchParameters.searchPage} / {totalPages}</span>
-		<button
-			on:click|preventDefault={() => {
-				paginate(+1)
-			}}><Fa icon={faArrowRightLong} /></button
-		>
+		<button class="watchlistbutton" on:click|preventDefault={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
 	</div>
-	<hr />
+
 	<section>
 		{#each search as movie}
 			<MovieShortContainer {movie} />
 		{/each}
 	</section>
-	<hr />
+
+	<div class="paginationcontainer">
+		<button class="watchlistbutton" on:click|preventDefault={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
+		<span>{searchParameters.searchPage} / {totalPages}</span>
+		<button class="watchlistbutton" on:click|preventDefault={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
+	</div>
 {:else}
 	<i>{searchQueryResult.Error}</i>
 {/if}
@@ -69,15 +66,26 @@
 	}
 	.paginationcontainer button {
 		padding: 0.2em 0.75em 0.2em 0.75em;
+		/* background-color: var(--color-main); */
+		
 	}
 
-	/*! Temp  */
 	section {
 		display: grid;
-		grid-template-columns: repeat(5, 1fr);
+		grid-template-columns: 1;
 		gap: 1em;
-		row-gap: 1em;
-
-		/* aspect-ratio: 3/4; */
+	}
+		
+	@media screen and (max-width: 450px) {
+	}
+	@media screen and (min-width: 450px) and (max-width: 750px) {
+		section {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	@media screen and (min-width: 750px) {
+		section {
+			grid-template-columns: repeat(5, 1fr);
+		}
 	}
 </style>

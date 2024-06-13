@@ -2,14 +2,22 @@
 	import Fa from "svelte-fa"
 	import { faPlus, faStar } from "@fortawesome/free-solid-svg-icons"
 	import { goto } from "$app/navigation"
+	import { enhance, applyAction } from "$app/forms"
 
 	export let data
+	let isLoggedIn = data.isLoggedIn
 	let movie = data.movie
 	let reviews = data.reviews
+	let userTitleStatus = data.userTitleStatus
 	let userReview = data.userReview
-	let isLoggedIn = data.isLoggedIn
 
+	let userTitleStatusForm:HTMLFormElement
 	let reviewModal:HTMLDialogElement
+	
+	function onChangeSubmitUserTitleStatus() {
+		userTitleStatusForm.requestSubmit()
+	}
+
 	function handleReviewButton() {
 		if (isLoggedIn) {
 			reviewModal.showModal()
@@ -33,6 +41,35 @@
 			<div class="movie-genres">
 				{#each movie.Genre.split(", ") as genre} <span class="genre">{genre}</span>{/each}
 			</div>
+				<form action="?/upsertWatchStatus" method="post" class="watch-status-form horizontal-flex" bind:this={userTitleStatusForm} use:enhance={() => {
+					return async ({result}) => {
+						// @ts-ignore
+						userTitleStatus = result.data
+						applyAction(result)
+					}
+				}}>
+					{#if userTitleStatus == null}
+						<button class="watchlistbutton" type="submit"><Fa icon={faPlus} size="lg"/><span>Add to watchlist</span></button>
+						<input type="hidden" name="watchStatus" value="PLAN_TO_WATCH">
+						<input type="hidden" name="currentSeason" value="0">
+						<input type="hidden" name="currentEpisode" value="0">
+					{:else}
+						<select name="watchStatus" title="Watch status" value={userTitleStatus.watchStatus} on:change={onChangeSubmitUserTitleStatus}>
+							<option value="PLAN_TO_WATCH">Plan to watch</option>
+							<option value="WATCHING">Watching</option>
+							<option value="ON_HOLD">On hold</option>
+							<option value="DROPPED">Dropped</option>
+							<option value="COMPLETED">Completed</option>
+						</select>
+						<label for="currentSeason">Season
+							<input type="number" inputmode="numeric" name="currentSeason" title="Current season" min="0" max="9999" value={userTitleStatus.currentSeason} size="6" on:change={onChangeSubmitUserTitleStatus}>
+						</label>
+						<label for="currentSeason">Episode
+							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={userTitleStatus.currentEpisode} size="6" on:change={onChangeSubmitUserTitleStatus}>
+						</label>
+					{/if}
+				</form>
+			<hr>
 			<p>{movie.Plot}</p>
 			<hr />
 			<p>
@@ -46,19 +83,20 @@
 				<b>Languages</b>{#each movie.Language.split(", ") as language}<span class="infolisting">{language}</span>{/each}
 			</p>
 		</div>
-		<aside class="vertical-flex">
-			<div class="sMDB-rating vertical-flex">
-				<span><b>IMDb rating</b></span>
-				<span>
-					<b>{movie.imdbRating}</b>/10
-					<span class="star-rating"><Fa icon={faStar}/></span>
+		<aside class="">
+			<div class="">
+				<h2><b>Ratings</b></h2>
+				<button on:click={handleReviewButton} class="watchlistbutton"><Fa icon={faPlus} size="lg"/><span>{userReview ? "Edit your review" : "Write review"}</span></button>
+			{#each movie.Ratings as rating}
+				<p><b>{rating.Source}</b></p>
+				<small>{rating.Value}</small>
+			{/each}
+				<!-- <span>
+				<b>{movie.imdbRating}</b>/10
+				<span class="star-rating"><Fa icon={faStar}/></span>
 				</span>
 				<span>{movie.imdbVotes} votes</span>
-				<a href="#critic-ratings"><p><b>{movie.Ratings.length}</b> Critic ratings</p></a>
-			</div>
-			<div class="vertical-flex">
-				<button class="watchlistbutton"><Fa icon={faPlus} size="lg"/><span>Add to favorites</span></button>
-				<button on:click={handleReviewButton} class="watchlistbutton"><Fa icon={faPlus} size="lg"/><span>{userReview ? "Edit your review" : "Write review"}</span></button>
+				<a href="#critic-ratings"><p><b>{movie.Ratings.length}</b> Critic ratings</p></a> -->
 			</div>
 		</aside>
 	</main>
@@ -92,7 +130,7 @@
 					<option value="2">2</option>
 					<option value="1">1</option>
 				</select>
-				<div style="display: flex; gap:0.5em;">
+				<div class="horizontal-flex">
 					<button type="button" on:click={closeReviewModal}>Cancel</button>
 					<button form="delete-review">Delete review</button>
 					<button type="submit">Submit review</button>
@@ -112,15 +150,18 @@
 			<p>No reviews for this {movie.Type} yet :(</p>
 		{/each}
 	</div>
-	<div id="critic-ratings">
+	<!-- <div id="critic-ratings">
 		<h2>Critic ratings</h2>
 		{#each movie.Ratings as rating}
 			<h3><b>{rating.Source}</b> | {rating.Value}</h3>
 		{/each}
-	</div>
+	</div> -->
 </article>
 
 <style>
+	.movie-info {
+		flex: 1;
+	}
 	.sMDB-rating {
 		padding: 0.5rem 1rem;
 		display: flex;
@@ -137,6 +178,10 @@
 	img.movieposter {
 		box-shadow: 0 3px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 	}
+	.watch-status-form input, .watch-status-form select {
+		width:  min-content;
+	}
+
 	@media screen and (max-width: 450px) {
 		main {
 			flex-direction: column;
@@ -153,8 +198,11 @@
 		}
 	}
 	@media screen and (min-width: 450px) and (max-width: 750px) {
-		main img.movieposter {
-			width: 50%;
+		main {
+			flex-direction: column;
+		}
+		img.movieposter {
+			/* width: 50%; */
 		}
 	}
 	@media screen and (min-width: 750px) {
@@ -165,6 +213,11 @@
 	.vertical-flex {
 		display: flex;
 		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.horizontal-flex {
+		display: flex;
+		flex-direction: row;
 		gap: 0.5rem;
 	}
 	div.movie-genres {
@@ -180,26 +233,6 @@
 		content: " | ";
 	}
 
-	/*? Global */
-	button.watchlistbutton {
-		padding: 1em;
-		color: inherit;
-		border: none;
-		background-color: var(--color-dark);
-		white-space: nowrap;
-		min-width: fit-content;
-	}
-	button.watchlistbutton:hover {
-		background-color: rgba(32, 35, 38, 0.8);
-		cursor: pointer;
-	}
-	button.watchlistbutton:active {
-		box-shadow: inset 3px 3px 2px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-	}
-	button.watchlistbutton span {
-		margin-left: 0.5em;
-		font-weight: 900;
-	}
 	textarea {
 		resize: none;
 	}

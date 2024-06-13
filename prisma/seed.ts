@@ -40,6 +40,14 @@ async function main() {
 					rating: 5,
 				},
 			},
+			UserTitleStatuses: {
+				create: {
+					imdbID: "tt1475582",
+					watchStatus: "PLAN_TO_WATCH",
+					currentEpisode: 12,
+					currentSeason: 2,
+				},
+			},
 		},
 	})
 

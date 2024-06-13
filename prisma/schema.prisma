@@ -28,6 +28,7 @@ model User {
   isAdmin   Boolean    @default(false)
 
   reviews   Review[]
+  UserTitleStatuses UserTitleStatus[]
 }
 
 model Review {
@@ -45,4 +46,26 @@ model Review {
   createdAt DateTime   @default(now())
 
   @@unique([authorId, imdbID])
+}
+
+enum WatchStatus {
+  PLAN_TO_WATCH
+  WATCHING
+  ON_HOLD
+  COMPLETED
+  DROPPED
+}
+
+model UserTitleStatus {
+  id  String @id @default(uuid())
+  userId String
+  user  User  @relation(fields: [userId], references: [id])
+
+  imdbID  String
+
+  watchStatus  WatchStatus  @default(PLAN_TO_WATCH)
+  currentSeason Int @default(0)
+  currentEpisode  Int @default(0)
+
+  @@unique([userId, imdbID])
 }
