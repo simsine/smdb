@@ -36,7 +36,7 @@
 		<div class="movie-info">
 			<div>
 				<h1><b>{movie.Title}</b></h1>
-				<p>{movie.Type} | {movie.Year} | {movie.Rated} | {movie.Runtime}</p>
+				<p><span title="Type">{movie.Type}</span> | <span title="Release year">{movie.Year}</span> | <span title="Age rating">{movie.Rated}</span> | <span title="Runtime">{movie.Runtime}</span></p>
 			</div>
 			<div class="movie-genres">
 				{#each movie.Genre.split(", ") as genre} <span class="genre">{genre}</span>{/each}
@@ -86,11 +86,14 @@
 		<aside class="">
 			<div class="">
 				<h2><b>Ratings</b></h2>
-				<button on:click={handleReviewButton} class="watchlistbutton"><Fa icon={faPlus} size="lg"/><span>{userReview ? "Edit your review" : "Write review"}</span></button>
+				<hr>
 			{#each movie.Ratings as rating}
-				<p><b>{rating.Source}</b></p>
+				<p><b>{rating.Source}</b></p>	
 				<small>{rating.Value}</small>
+			{:else}
+				<p>We found no external ratings ;(</p>
 			{/each}
+			
 				<!-- <span>
 				<b>{movie.imdbRating}</b>/10
 				<span class="star-rating"><Fa icon={faStar}/></span>
@@ -100,9 +103,9 @@
 			</div>
 		</aside>
 	</main>
-	
 	<div id="user-reviews">
 		<h2>User reviews</h2>
+		<button on:click={handleReviewButton} class="watchlistbutton"><Fa icon={faPlus} size="lg"/><span>{userReview ? "Edit your review" : "Write review"}</span></button>
 		<dialog bind:this={reviewModal}>
 			<h3>{userReview ? "Edit your review" : "Write new review"}</h3>
 			<form class="vertical-flex" method="post" action="?/upsertReview">
@@ -159,6 +162,11 @@
 </article>
 
 <style>
+	article {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
 	.movie-info {
 		flex: 1;
 	}
