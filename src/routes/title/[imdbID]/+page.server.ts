@@ -1,15 +1,14 @@
 import type { PageServerLoad } from "./$types"
-import { SECRET_APIKEY } from "$env/static/private"
 import type { MovieFull } from "$lib/types"
 import { WatchStatus } from "@prisma/client"
 import { error, redirect } from "@sveltejs/kit"
 import pc from "$lib/prisma"
+import { getOMDBTitle } from "$lib/helpers"
 
-export const load = (async ({ fetch, params, locals }) => {
+export const load = (async ({params, locals }) => {
 	let imdbID = params.imdbID
 
-	let response = await fetch(`https://www.omdbapi.com/?apikey=${SECRET_APIKEY}&i=${imdbID}`)
-	let movie: MovieFull = await response.json()
+	let movie:MovieFull = await getOMDBTitle(imdbID)
 
 	if (movie.Response !== "True") {
 		error(404, { message: (movie.Error ??= "Movie with id " + imdbID + " not found") });

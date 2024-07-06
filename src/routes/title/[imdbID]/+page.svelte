@@ -3,6 +3,7 @@
 	import { faPlus, faStar } from "@fortawesome/free-solid-svg-icons"
 	import { goto } from "$app/navigation"
 	import { enhance, applyAction } from "$app/forms"
+	import type { UserTitleStatus } from "@prisma/client"
 	
 	export let data
 	export let form
@@ -44,15 +45,14 @@
 			</div>
 				<form action="?/upsertWatchStatus" method="post" class="watch-status-form horizontal-flex" bind:this={userTitleStatusForm} use:enhance={() => {
 					return async ({result}) => {
-						applyAction(result)
+						await applyAction(result)
+						if (result.type === "success") {
+							//@ts-ignore
+							userTitleStatus = form
+						}
 					}
 				}}>
-					{#if userTitleStatus == null}
-						<button class="watchlistbutton" type="submit"><Fa icon={faPlus} size="lg"/><span>Add to watchlist</span></button>
-						<input type="hidden" name="watchStatus" value="PLAN_TO_WATCH">
-						<input type="hidden" name="currentSeason" value="0">
-						<input type="hidden" name="currentEpisode" value="0">
-					{:else}
+					{#if userTitleStatus != null}
 						<select name="watchStatus" title="Watch status" value={form?.watchStatus ?? userTitleStatus.watchStatus} on:change={onChangeSubmitUserTitleStatus}>
 							<option value="PLAN_TO_WATCH">Plan to watch</option>
 							<option value="WATCHING">Watching</option>
@@ -66,6 +66,11 @@
 						<label for="currentSeason">Episode
 							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={form?.currentEpisode ?? userTitleStatus.currentEpisode} size="6" on:change={onChangeSubmitUserTitleStatus}>
 						</label>
+					{:else}
+						<button class="watchlistbutton" type="submit"><Fa icon={faPlus} size="lg"/><span>Add to watchlist</span></button>
+						<input type="hidden" name="watchStatus" value="PLAN_TO_WATCH">
+						<input type="hidden" name="currentSeason" value="0">
+						<input type="hidden" name="currentEpisode" value="0">
 					{/if}
 				</form>
 			<hr>

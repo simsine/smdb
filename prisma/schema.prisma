@@ -69,3 +69,9 @@ model UserTitleStatus {
 
   @@unique([userId, imdbID])
 }
+
+model omdbTitle {
+  imdbID String @id
+  data Json
+  lastUpdated DateTime
+}
