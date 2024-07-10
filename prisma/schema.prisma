@@ -10,6 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String  @id
+  username      String  @unique
+  passwordHash  String
+  sessions      Session[]
+
+  createdAt DateTime   @default(now())
+  isAdmin   Boolean    @default(false)
+
+  reviews   Review[]
+  UserTitleStatuses UserTitleStatus[]
+}
+
+model Session {
+  id        String @id
+  userId    String
+  expiresAt DateTime
+  user      User  @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
 model News {
   id          Int      @id @default(autoincrement())
   title       String
@@ -18,18 +38,6 @@ model News {
   date        DateTime @default(now())
 }
 
-model User {
-  id        String     @id @default(uuid())
-  username  String     @unique
-  passwordHash  String
-  userAuthToken String @unique
-
-  createdAt DateTime   @default(now())
-  isAdmin   Boolean    @default(false)
-
-  reviews   Review[]
-  UserTitleStatuses UserTitleStatus[]
-}
 
 model Review {
   id        String     @id @default(uuid())

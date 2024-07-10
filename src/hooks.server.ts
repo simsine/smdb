@@ -1,29 +1,30 @@
-import type { Handle } from "@sveltejs/kit"
-import pc from "$lib/prisma"
+import { lucia } from "$lib/auth"
 
-export const handle: Handle = async ({ event, resolve }) => {
+export const handle = async ({ event, resolve }) => {
 	// get cookies from browser
-	const session = event.cookies.get("session")
+	const sessionId = event.cookies.get(lucia.sessionCookieName)
+	if (!sessionId) {
+		event.locals.user = null
+		event.locals.session = null
+		return resolve(event)
+	}
 
+	const {session, user} = await lucia.validateSession(sessionId)
+	if (session && session.fresh) {
+		const sessionCookie = lucia.createSessionCookie(session.id)
+		event.cookies.set(sessionCookie.name, sessionCookie.value, {
+			path: ".",
+			...sessionCookie.attributes
+		})
+	}
 	if (!session) {
-		// if there is no session load page as normal
-		return await resolve(event)
+		const sessionCookie =  lucia.createBlankSessionCookie()
+		event.cookies.set(sessionCookie.name, sessionCookie.value, {
+			path: ".",
+			...sessionCookie.attributes
+		})
 	}
-
-	// find the user based on the session
-	const user = await pc.user.findUnique({
-		where: { userAuthToken: session },
-		select: { username: true, id: true },
-	})
-
-	// if `user` exists set `events.local`
-	if (user) {
-		event.locals.user = {
-			id: user.id,
-			name: user.username,
-		}
-	}
-
-	// load page as normal
-	return await resolve(event)
+	event.locals.user = user
+	event.locals.session = session
+	return resolve(event)
 }

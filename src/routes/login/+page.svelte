@@ -1,31 +1,35 @@
 <script lang="ts">
-	import type { ActionData } from "./$types"
-
-	export let form: ActionData
+	export let form
 </script>
 
 <h1>Login</h1>
 
 <form action="?/login" method="POST">
 	<div>
-		<label for="username">Username</label>
-		<input id="username" name="username" type="text" required />
+		<label for="username">
+			<h4>Username</h4>
+			<input id="username" name="username" type="text" required />
+		</label>
 	</div>
 
 	<div>
-		<label for="password">Password</label>
-		<input id="password" name="password" type="password" required />
+		<label for="password">
+			<h4>Password</h4>
+			<input id="password" name="password" type="password" required />
+		</label>
 	</div>
 
-	<a href="/register"><p>register</p></a>
-
-	{#if form?.invalid}
-		<p class="error">Username and password is required.</p>
+	
+	{#if form?.message}
+	<p class="error">{form.message}</p>
 	{/if}
-
-	{#if form?.credentials}
-		<p class="error">You have entered the wrong credentials.</p>
-	{/if}
-
-	<button type="submit">Log in</button>
+	
+	<button type="submit" class="watchlistbutton"><span>Log In</span></button>
 </form>
+<a href="/register">register</a>
+
+<style>
+	.error {
+		color: crimson;
+	}
+</style>

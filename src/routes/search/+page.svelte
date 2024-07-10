@@ -54,7 +54,8 @@
 		<button class="watchlistbutton" on:click|preventDefault={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
 	</div>
 {:else}
-	<i>{searchQueryResult.Error}</i>
+	<h1>Result:</h1>
+	<h4><i>{searchQueryResult.Error}</i></h4>
 {/if}
 
 <style>
