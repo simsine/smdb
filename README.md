@@ -15,6 +15,8 @@ On the backend we use the [Prisma ORM](https://www.prisma.io/) which is a JavaSc
 
 [Postgres](https://www.postgresql.org/) is the database of choice for this application for what should be obvious reasons.
 
+[lucia-auth](https://lucia-auth.com) for simple session authentication
+
 ## Developing
 
 Requirements for developing this application includes:
@@ -25,12 +27,14 @@ Requirements for developing this application includes:
 
 You must first set the correct enviornment variables for the project, copy the example file with the following command
 
-SECRET_APIKEY is an API key for the  OMDb API
-DATABASE_URL is the connection url for the postgres database
+
 
 ```sh
 cp .env.example .env && nano .env
 ```
+
+- SECRET_APIKEY is an API key for the OMDb API
+- DATABASE_URL is the connection url for the postgres database
 
 Then you must install the dependencies using the following command
 

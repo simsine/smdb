@@ -2,11 +2,12 @@
 	import Navbar from "$lib/components/navbar.svelte"
 
 	import "../app.css"
+	export let data
 </script>
 
 
 <div>
-	<Navbar />
+	<Navbar username={data.user?.username}/>
 	<slot />
 </div>
 

@@ -1,60 +1,58 @@
 <script lang="ts">
 	import Fa from "svelte-fa"
-	import { faMagnifyingGlass, faUserCircle, faSignOut, faSignIn, faX, faXmark } from "@fortawesome/free-solid-svg-icons"
+	import { faMagnifyingGlass, faUserCircle, faSignOut, faSignIn, faXmark } from "@fortawesome/free-solid-svg-icons"
 
-	import { page } from "$app/stores"
-	const username = $page.data.user?.name // Setting this to const because it becomes undefined if it is made reactive for some god forsaken reasons
+	export let username
 	let showMobileSearch = false
 </script>
 
 <nav>
 	{#if showMobileSearch}
-	<form action="/search" class="search-form">
-		<select name="f" id="f" title="Filter">
-			<option value="">All</option>
-			<option value="movie">Movies</option>
-			<option value="series">Series</option>
-			<option value="game">Games</option>
-			<option value="episode">Episodes</option>
-		</select>
-		<div class="searchformrightfield">
-			<input placeholder="Search" type="text" name="s" id="s" />
-			<button type="submit" value="Search" class="searchbutton" title="Search"><Fa icon={faMagnifyingGlass} size="lg" /></button>
-		</div>
-		<input type="hidden" name="p" value="1" />
-	</form>
-	<button on:click={()=>{showMobileSearch = !showMobileSearch}}>
-		<Fa icon={faXmark} size="2.5x" color="white" />
-	</button>
+		<form action="/search" class="search-form">
+			<select name="f" id="f" title="Filter">
+				<option value="">All</option>
+				<option value="movie">Movies</option>
+				<option value="series">Series</option>
+				<option value="game">Games</option>
+				<option value="episode">Episodes</option>
+			</select>
+			<div class="searchformrightfield mobile">
+				<input placeholder="Search for anything..." type="text" name="s" id="s" />
+			</div>
+			<input type="hidden" name="p" value="1" />
+		</form>
+		<button on:click={()=>{showMobileSearch = !showMobileSearch}}>
+			<Fa icon={faXmark} size="2.5x" color="white" />
+		</button>
 	{:else}
-	<a href="/" class="logo"><span>sMDB</span></a>
-	<form action="/search" class="search-form desktop">
-		<select name="f" id="f" title="Filter">
-			<option value="">All</option>
-			<option value="movie">Movies</option>
-			<option value="series">Series</option>
-			<option value="game">Games</option>
-			<option value="episode">Episodes</option>
-		</select>
-		<div class="searchformrightfield">
-			<input placeholder="Search for movies, series, games and more..." type="text" name="s" id="s" />
-			<button type="submit" value="Search" class="searchbutton" title="Search"><Fa icon={faMagnifyingGlass} size="lg" /></button>
-		</div>
-		<input type="hidden" name="p" value="1" />
-	</form>
-	{#if username}<!-- User is logged in, show profile and logout-->
-	<a href="/user/{username}" title="Profile"><Fa icon={faUserCircle} size="2.5x" color="white" /></a>
-	
-	<!-- We need to send a form action to the logout api route -->
-	<form action="/logout" method="POST">
-		<button type="submit" title="Log out"><Fa icon={faSignOut} size="2.5x" color="white" /></button>
-	</form>
-	{:else}
-	<a href="/login"><Fa icon={faSignIn} size="2.5x" color="white" /></a>
-	{/if}
-	<button class="mobile-search-button"  on:click={()=>{showMobileSearch = !showMobileSearch}}>
-		<Fa icon={faMagnifyingGlass} size="2.5x" color="white" />
-	</button>
+		<a href="/" class="logo"><span>sMDB</span></a>
+		<form action="/search" class="search-form desktop">
+			<select name="f" id="f" title="Filter">
+				<option value="">All</option>
+				<option value="movie">Movies</option>
+				<option value="series">Series</option>
+				<option value="game">Games</option>
+				<option value="episode">Episodes</option>
+			</select>
+			<div class="searchformrightfield">
+				<input placeholder="Search for movies, series, games and more..." type="text" name="s" id="s" required/>
+				<button type="submit" value="Search" class="searchbutton" title="Search"><Fa icon={faMagnifyingGlass} size="lg"/></button>
+			</div>
+			<input type="hidden" name="p" value="1" />
+		</form>
+		{#if username}<!-- User is logged in, show profile and logout-->
+			<a href="/user/{username}" title="Profile"><Fa icon={faUserCircle} size="2.5x" color="white" /></a>
+			
+			<!-- We need to send a form action to the logout api route -->
+			<form action="/logout" method="POST">
+				<button type="submit" title="Log out"><Fa icon={faSignOut} size="2.5x" color="white" /></button>
+			</form>
+		{:else}
+			<a href="/login"><Fa icon={faSignIn} size="2.5x" color="white" /></a>
+		{/if}
+		<button class="mobile-search-button"  on:click={()=>{showMobileSearch = !showMobileSearch}}>
+			<Fa icon={faMagnifyingGlass} size="2.5x" color="white" />
+		</button>
 	{/if}
 </nav>
 
@@ -132,5 +130,10 @@
 	}
 	.mobile-search-button {
 		display: none;
+	}
+	.mobile {
+		border-top-right-radius: 0.25em;
+		border-bottom-right-radius: 0.25em;
+		overflow: hidden;
 	}
 </style>
