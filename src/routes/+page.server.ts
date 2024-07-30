@@ -1,4 +1,3 @@
-import type { PageServerLoad } from "./$types"
 import pc from "$lib/prisma"
 
 export const load = (async () => {
@@ -11,4 +10,4 @@ export const load = (async () => {
 		},
 	})
 	return { news }
-}) satisfies PageServerLoad
+})
