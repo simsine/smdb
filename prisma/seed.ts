@@ -1,18 +1,23 @@
+import { generateIdFromEntropySize } from "lucia"
+import { hash } from "@node-rs/argon2"
 import { PrismaClient } from "@prisma/client"
-const pc: PrismaClient = new PrismaClient()
-import crypto from "node:crypto"
-import bcrypt from "bcrypt"
+const pc = new PrismaClient()
 
 async function main() {
 	//* We use the prisma orm upsert method to seed the database with entries
 
-	const admin = await pc.user.upsert({
+	await pc.user.upsert({
 		where: { username: "admin" },
 		update: {},
 		create: {
+			id: generateIdFromEntropySize(10),
 			username: "admin",
-			passwordHash: await bcrypt.hash("admin", 10),
-			userAuthToken: crypto.randomUUID(),
+			passwordHash: await hash("admin123", {
+				memoryCost: 19456,
+				timeCost: 2,
+				outputLen: 32,
+				parallelism: 1
+			}),
 			isAdmin: true,
 			reviews: {
 				create: {
@@ -25,13 +30,18 @@ async function main() {
 		},
 	})
 
-	const bjarne = await pc.user.upsert({
+	await pc.user.upsert({
 		where: { username: "bjarne" },
 		update: {},
 		create: {
+			id: generateIdFromEntropySize(10),
 			username: "bjarne",
-			passwordHash: await bcrypt.hash("bjarne_er_best_123", 10),
-			userAuthToken: crypto.randomUUID(),
+			passwordHash: await hash("bjarne123", {
+				memoryCost: 19456,
+				timeCost: 2,
+				outputLen: 32,
+				parallelism: 1
+			}),
 			reviews: {
 				create: {
 					imdbID: "tt1475582",
@@ -51,7 +61,7 @@ async function main() {
 		},
 	})
 
-	const newspost = await pc.news.upsert({
+	await pc.news.upsert({
 		where: { id: 1 },
 		update: {},
 		create: {
@@ -61,8 +71,6 @@ async function main() {
 				if you see this then you have most likely done something right!",
 		},
 	})
-	console.info("Database seeded with the following rows:")
-	console.info(admin, bjarne, newspost)
 }
 main()
 	.then(async () => {

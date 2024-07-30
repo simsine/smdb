@@ -1,14 +1,12 @@
-import type { PageServerLoad } from "./$types"
-import type { MovieFull } from "$lib/types"
-import { WatchStatus } from "@prisma/client"
 import { error, redirect } from "@sveltejs/kit"
-import pc from "$lib/prisma"
+import { WatchStatus } from "@prisma/client"
 import { getOMDBTitle } from "$lib/helpers"
+import pc from "$lib/prisma"
 
-export const load = (async ({params, locals }) => {
+export const load = async ({params, locals }) => {
 	let imdbID = params.imdbID
 
-	let movie:MovieFull = await getOMDBTitle(imdbID)
+	let movie = await getOMDBTitle(imdbID)
 
 	if (movie.Response !== "True") {
 		error(404, { message: (movie.Error ??= "Movie with id " + imdbID + " not found") });
@@ -27,26 +25,38 @@ export const load = (async ({params, locals }) => {
 		},
 	})
 
-	let isLoggedIn = locals.user != null
+	let isLoggedIn
 	let userReview
 	let userTitleStatus
-	if (isLoggedIn) {
+	if (isLoggedIn = locals.user != null) {
 		userReview = await pc.review.findFirst({
 			where: {
 				imdbID: movie.imdbID,
 				authorId: locals.user.id,
 			},
+			select: {
+				title:true,
+				content:true,
+				rating:true
+			}
 		})
 		userTitleStatus = await pc.userTitleStatus.findFirst({
 			where: {
 				imdbID: movie.imdbID,
 				userId: locals.user.id,
 			},
+			select:{
+				watchStatus:true,
+				currentSeason:true,
+				currentEpisode:true
+			}
 		})
 	}
 
-	return { movie, reviews, userReview, userTitleStatus, isLoggedIn }
-}) satisfies PageServerLoad
+	let pageTitle = movie.Title
+
+	return { movie, reviews, userReview, userTitleStatus, isLoggedIn, pageTitle }
+}
 
 export const actions = {
 	upsertWatchStatus: async (event) => {
@@ -74,6 +84,7 @@ export const actions = {
 				watchStatus: watchStatus,
 				currentSeason: currentSeason,
 				currentEpisode: currentEpisode,
+				updatedAt: new Date()
 			},
 			create: {
 				userId: event.locals.user.id,

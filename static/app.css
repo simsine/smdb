@@ -1,10 +1,12 @@
 /* https://coolors.co/palette/780000-c1121f-fdf0d5-003049-669bbc */
 /* https://coolors.co/palette/2b2d42-8d99ae-edf2f4-ef233c-d90429 */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 :root {
 	--color-light: #edf2f4;
-	--color-dark: #202326;
+	--color-muted: rgb(175, 175, 175);
+	--color-dark: rgb(32, 35, 38);
 	--color-main: rgb(239, 35, 60);
 	--color-main-muted: rgba(239, 35, 59, 0.85);
 	--color-secondary: #2b2d42;
@@ -17,7 +19,7 @@ html {
 
 body,
 dialog {
-	font-family: "Roboto", sans-serif;
+	font-family: "Outfit", sans-serif;
 	background-color: var(--color-secondary);
 	color: var(--color-light);
 }
@@ -108,4 +110,28 @@ button.watchlistbutton:active {
 button.watchlistbutton span {
 	margin-left: 0.5em;
 	font-weight: 900;
+}
+
+.horizontal-flex {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+	align-items: stretch;
+}
+.vertical-flex {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.link-button {
+	text-align: center;
+	text-decoration: none;
+	color: var(--color-light);
+	background-color: var(--color-main);
+	padding: 0.25em;
+	border-radius: 0.25rem;
+	font-size: 1.5em;
+	font-weight: 500;
+	flex:1;
 }

@@ -25,7 +25,7 @@
 			<Fa icon={faXmark} size="2.5x" color="white" />
 		</button>
 	{:else}
-		<a href="/" class="logo"><span>sMDB</span></a>
+		<a href="/" class="logo link-button">Seenit</a>
 		<form action="/search" class="search-form desktop">
 			<select name="f" id="f" title="Filter">
 				<option value="">All</option>
@@ -40,6 +40,7 @@
 			</div>
 			<input type="hidden" name="p" value="1" />
 		</form>
+		<div class="spacer"></div>
 		{#if username}<!-- User is logged in, show profile and logout-->
 			<a href="/user/{username}" title="Profile"><Fa icon={faUserCircle} size="2.5x" color="white" /></a>
 			
@@ -62,35 +63,20 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		gap: 15px;
+		gap: 1rem;
 	}
-
-	@media screen and (max-width: 450px) {
-		form.desktop {
-			display:none !important;
-		}
-		.mobile-search-button {
-			display: block !important;; 
-		}
+	div.spacer {
+		flex:1;
 	}
-	@media screen and (min-width: 450px) and (max-width: 750px) {
-	}
-	@media screen and (min-width: 750px) {
-	}
-
 	.logo {
 		letter-spacing: -1px;
 		font-weight: 900;
 		font-size: 2em;
-		text-decoration: none;
-		color: var(--color-light);
-		background-color: var(--color-main);
-		padding: 0 0.5em 0 0.5em;
+		padding: 0 0.5em;
 		height: 50px;
-		border-radius: 0.25rem;
 	}
 	form.search-form {
-		height: 50px;
+		height: 3rem;
 		width: 100%;
 		display: flex;
 		gap: 1px;
@@ -135,5 +121,22 @@
 		border-top-right-radius: 0.25em;
 		border-bottom-right-radius: 0.25em;
 		overflow: hidden;
+	}
+
+	@media screen and (max-width: 450px) {
+		form.desktop {
+			display:none;
+		}
+		.mobile-search-button {
+			display: block; 
+		}
+	}
+	@media screen and (min-width: 450px) and (max-width: 750px) {
+
+	}
+	@media screen and (min-width: 750px) {
+		div.spacer {
+			display: none;
+		}
 	}
 </style>
