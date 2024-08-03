@@ -53,13 +53,15 @@
 					}
 				}}>
 					{#if userTitleStatus != null}
-						<select name="watchStatus" title="Watch status" value={form?.watchStatus ?? userTitleStatus.watchStatus} on:change={onChangeSubmitUserTitleStatus}>
-							<option value="PLAN_TO_WATCH">Plan to watch</option>
-							<option value="WATCHING">Watching</option>
-							<option value="ON_HOLD">On hold</option>
-							<option value="DROPPED">Dropped</option>
-							<option value="COMPLETED">Completed</option>
-						</select>
+						<label for="watchStatus">Status
+							<select name="watchStatus" title="Watch status" value={form?.watchStatus ?? userTitleStatus.watchStatus} on:change={onChangeSubmitUserTitleStatus}>
+								<option value="PLAN_TO_WATCH">Plan to watch</option>
+								<option value="WATCHING">Watching</option>
+								<option value="ON_HOLD">On hold</option>
+								<option value="DROPPED">Dropped</option>
+								<option value="COMPLETED">Completed</option>
+							</select>
+						</label>
 						<label for="currentSeason">Season
 							<input type="number" inputmode="numeric" name="currentSeason" title="Current season" min="0" max="9999" value={form?.currentSeason ?? userTitleStatus.currentSeason} size="6" on:change={onChangeSubmitUserTitleStatus}>
 						</label>
@@ -67,7 +69,7 @@
 							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={form?.currentEpisode ?? userTitleStatus.currentEpisode} size="6" on:change={onChangeSubmitUserTitleStatus}>
 						</label>
 					{:else}
-						<button class="watchlistbutton" type="submit"><Fa icon={faPlus} size="lg"/><span>Add to watchlist</span></button>
+						<button class="btn" type="submit"><Fa icon={faPlus} size="lg"/><span>Add to watchlist</span></button>
 						<input type="hidden" name="watchStatus" value="PLAN_TO_WATCH">
 						<input type="hidden" name="currentSeason" value="0">
 						<input type="hidden" name="currentEpisode" value="0">
@@ -96,7 +98,7 @@
 	</main>
 	<div id="user-reviews">
 		<h2>User reviews</h2>
-		<button on:click={handleReviewButton} class="watchlistbutton"><Fa icon={faPlus} size="lg"/><span>{userReview ? "Edit your review" : "Write review"}</span></button>
+		<button on:click={handleReviewButton} class="btn"><Fa icon={faPlus} size="lg"/> <span>{userReview ? "Edit your review" : "Write review"}</span></button>
 		<dialog bind:this={reviewModal}>
 			<h3>{userReview ? "Edit your review" : "Write new review"}</h3>
 			<form class="vertical-flex" method="post" action="?/upsertReview">
@@ -167,7 +169,7 @@
 		box-shadow: 0 3px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 	}
 	.watch-status-form input, .watch-status-form select {
-		width:  min-content;
+		min-width: 100%;
 	}
 
 	@media screen and (max-width: 450px) {
@@ -178,7 +180,7 @@
 		img.movieposter {
 			width: 100%;
 		}
-		button.watchlistbutton {
+		button.btn {
 			width: 100%;
 		}
 	}
@@ -191,12 +193,15 @@
 		main {
 			flex-direction: row;
 		}
+		.watch-status-form input, .watch-status-form select {
+			min-width: auto;
+		}
 	}
 
 	div.movie-genres {
 		display: flex;
 		gap: 5px;
-		margin-bottom: 1rem;
+		margin: 1rem 0;
 	}
 	span.genre {
 		padding: 5px;
@@ -208,5 +213,8 @@
 
 	textarea {
 		resize: none;
+	}
+	select, input {
+		height: 2rem;
 	}
 </style>

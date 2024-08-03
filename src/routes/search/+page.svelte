@@ -37,9 +37,9 @@
 	<h3><b>Search:</b> "{searchParameters.searchQuery}", found {searchQueryResult.totalResults} results</h3>
 
 	<div class="paginationcontainer">
-		<button class="watchlistbutton" on:click|preventDefault={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
+		<button class="btn" on:click|preventDefault={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
 		<span>{searchParameters.searchPage} / {totalPages}</span>
-		<button class="watchlistbutton" on:click|preventDefault={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
+		<button class="btn" on:click|preventDefault={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
 	</div>
 
 	<section>
@@ -49,9 +49,9 @@
 	</section>
 
 	<div class="paginationcontainer">
-		<button class="watchlistbutton" on:click|preventDefault={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
+		<button class="btn" on:click|preventDefault={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
 		<span>{searchParameters.searchPage} / {totalPages}</span>
-		<button class="watchlistbutton" on:click|preventDefault={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
+		<button class="btn" on:click|preventDefault={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
 	</div>
 {:else}
 	<h1>Result:</h1>

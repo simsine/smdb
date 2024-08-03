@@ -25,7 +25,7 @@
 			<Fa icon={faXmark} size="2.5x" color="white" />
 		</button>
 	{:else}
-		<a href="/" class="logo link-button">Seenit</a>
+		<a href="/" class="logo btn">Seenit</a>
 		<form action="/search" class="search-form desktop">
 			<select name="f" id="f" title="Filter">
 				<option value="">All</option>

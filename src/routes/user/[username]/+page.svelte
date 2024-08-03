@@ -29,9 +29,9 @@
 				<div>
 					<p><a href="/title/{userTitleStatus.imdbID}">{imdbTitle.Title}</a></p>
 					<small>{userTitleStatus.watchStatus}</small><br>
-					<small>Season</small> <b>{userTitleStatus.currentSeason}</b> <small>Episode</small> <b>{userTitleStatus.currentSeason}</b>
+					<small>Season</small> <b>{userTitleStatus.currentSeason}</b> <small>Episode</small> <b>{userTitleStatus.currentEpisode}</b>
 				</div>
-				<div style="flex:1"></div>
+				<div class="flex-1"></div>
 				<small>{userTitleStatus.updatedAt.toDateString()}</small>
 			</article>
 		{/await}

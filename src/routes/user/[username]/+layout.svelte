@@ -8,9 +8,9 @@
             <h1>{data.user.username}'s Profile</h1>
         </a>
         <p>User since {data.user.createdAt.toDateString()}</p>
-        <div class="horizontal-flex">
-            <a href="/user/{data.user.username}/watchlist" class="link-button"><span>WatchList</span></a>
-            <a href="/user/{data.user.username}/reviews" class="link-button"><span>Reviews</span></a>
+        <div class="horizontal-flex margin">
+            <a href="/user/{data.user.username}/watchlist" class="btn flex-1"><span>WatchList</span></a>
+            <a href="/user/{data.user.username}/reviews" class="btn flex-1"><span>Reviews</span></a>
         </div>
     </aside>
     <div>
@@ -22,7 +22,9 @@
     main {
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+    }
+    div.margin {
+        margin: 1rem 0;
     }
 
     @media screen and (max-width: 450px) {
@@ -34,6 +36,7 @@
     @media screen and (min-width: 750px) {
         main {
             flex-direction: row;
+            gap: 2rem;
         }
     }
 </style>
