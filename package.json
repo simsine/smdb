@@ -39,7 +39,8 @@
 		"@prisma/client": "^5.16.1",
 		"lucia": "^3.2.0",
 		"svelte-fa": "^4.0.2",
-		"svelte-markdown": "^0.4.1"
+		"svelte-markdown": "^0.4.1",
+		"svelte-table": "^0.6.3"
 	},
 	"type": "module"
 }
