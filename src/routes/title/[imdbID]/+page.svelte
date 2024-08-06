@@ -3,10 +3,8 @@
 	import { faPlus, faStar } from "@fortawesome/free-solid-svg-icons"
 	import { goto } from "$app/navigation"
 	import { enhance, applyAction } from "$app/forms"
-	import type { UserTitleStatus } from "@prisma/client"
 	
 	export let data
-	export let form
 	let isLoggedIn = data.isLoggedIn
 	let movie = data.movie
 	let reviews = data.reviews
@@ -43,18 +41,18 @@
 			<div class="movie-genres">
 				{#each movie.Genre.split(", ") as genre} <span class="genre">{genre}</span>{/each}
 			</div>
-				<form action="?/upsertWatchStatus" method="post" class="watch-status-form horizontal-flex" bind:this={userTitleStatusForm} use:enhance={() => {
+				<form action="?/upsertWatchStatus" method="post" class="watch-status-form horizontal-flex" bind:this={userTitleStatusForm} use:enhance={({}) => {
 					return async ({result}) => {
 						await applyAction(result)
 						if (result.type === "success") {
 							//@ts-ignore
-							userTitleStatus = form
+							userTitleStatus = result.data
 						}
 					}
 				}}>
 					{#if userTitleStatus != null}
 						<label for="watchStatus">Status
-							<select name="watchStatus" title="Watch status" value={form?.watchStatus ?? userTitleStatus.watchStatus} on:change={onChangeSubmitUserTitleStatus}>
+							<select name="watchStatus" title="Watch status" value={userTitleStatus.watchStatus} on:change={onChangeSubmitUserTitleStatus}>
 								<option value="PLAN_TO_WATCH">Plan to watch</option>
 								<option value="WATCHING">Watching</option>
 								<option value="ON_HOLD">On hold</option>
@@ -63,10 +61,10 @@
 							</select>
 						</label>
 						<label for="currentSeason">Season
-							<input type="number" inputmode="numeric" name="currentSeason" title="Current season" min="0" max="9999" value={form?.currentSeason ?? userTitleStatus.currentSeason} size="6" on:change={onChangeSubmitUserTitleStatus}>
+							<input type="number" inputmode="numeric" name="currentSeason" title="Current season" min="0" max="9999" value={userTitleStatus.currentSeason} on:change={onChangeSubmitUserTitleStatus}>
 						</label>
 						<label for="currentSeason">Episode
-							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={form?.currentEpisode ?? userTitleStatus.currentEpisode} size="6" on:change={onChangeSubmitUserTitleStatus}>
+							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={userTitleStatus.currentEpisode} on:change={onChangeSubmitUserTitleStatus}>
 						</label>
 					{:else}
 						<button class="btn" type="submit"><Fa icon={faPlus} size="lg"/><span>Add to watchlist</span></button>
