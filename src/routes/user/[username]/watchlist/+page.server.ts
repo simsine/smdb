@@ -25,5 +25,5 @@ export const load = (async ({ params }) => {
             return [title.imdbID, title]
         })
     )
-    return { userTitleStatuses, omdbTitles };
+    return { userTitleStatuses, omdbTitles, pageTitle: user.username + "'s watchlist" };
 })

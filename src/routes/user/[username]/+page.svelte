@@ -1,15 +1,8 @@
 <script lang="ts">
-	import type { MovieFull } from '$lib/types'
-
 	export let data
-
-	async function getTitleByID(imdbID:string):Promise<MovieFull> {
-		return (await fetch(`/api/title/${imdbID}`, {
-			headers: {
-				"Cache-Control": "max-age=3600",
-			}
-		})).json()
-	}
+	let userTitleStatuses = data.user.UserTitleStatuses
+	let omdbTitles = data.omdbTitles
+	let reviews = data.user.reviews
 </script>
 
 <section>
@@ -18,23 +11,19 @@
 		<a href="/user/{data.user.username}/watchlist">See more</a>
 	</div>
 	<hr>
-	{#each data.user.UserTitleStatuses as userTitleStatus}
-		{#await getTitleByID(userTitleStatus.imdbID)}
-			lol
-		{:then imdbTitle}
-			<article>
-				<a href="/title/{userTitleStatus.imdbID}">
-					<img src="{imdbTitle.Poster}" alt="" height="100px" width="75px">
-				</a>
-				<div>
-					<p><a href="/title/{userTitleStatus.imdbID}">{imdbTitle.Title}</a></p>
-					<small>{userTitleStatus.watchStatus}</small><br>
-					<small>Season</small> <b>{userTitleStatus.currentSeason}</b> <small>Episode</small> <b>{userTitleStatus.currentEpisode}</b>
-				</div>
-				<div class="flex-1"></div>
-				<small>{userTitleStatus.updatedAt.toDateString()}</small>
-			</article>
-		{/await}
+	{#each userTitleStatuses as userTitleStatus}
+		<article>
+			<a href="/title/{userTitleStatus.imdbID}">
+				<img src="{omdbTitles.get(userTitleStatus.imdbID)?.Poster}" alt="" height="100px" width="75px">
+			</a>
+			<div>
+				<p><a href="/title/{userTitleStatus.imdbID}">{omdbTitles.get(userTitleStatus.imdbID)?.Title}</a></p>
+				<small>{userTitleStatus.watchStatus}</small><br>
+				<small>Season</small> <b>{userTitleStatus.currentSeason}</b> <small>Episode</small> <b>{userTitleStatus.currentEpisode}</b>
+			</div>
+			<div class="flex-1"></div>
+			<small>{userTitleStatus.updatedAt.toDateString()}</small>
+		</article>
 	{/each}
 </section>
 <section>
@@ -43,13 +32,10 @@
 		<a href="/user/{data.user.username}/reviews">See more</a>
 	</div>
 	<hr>
-	{#each data.user.reviews as review}
-		{#await getTitleByID(review.imdbID)}
-			lol
-		{:then imdbTitle} 
+	{#each reviews as review}
 		<article>
 			<a href="/title/{review.imdbID}">
-				<img src="{imdbTitle.Poster}" alt="" height="100px" width="75px">
+				<img src="{omdbTitles.get(review.imdbID)?.Poster}" alt="" height="100px" width="75px">
 			</a>
 			<div>
 				<p><a href="/title/{review.imdbID}">{review.title}</a></p>
@@ -59,7 +45,6 @@
 			<div style="flex:1"></div>
 			<p>{review.createdAt.toDateString()}</p>
 		</article>
-		{/await}
 	{/each}
 </section>
 

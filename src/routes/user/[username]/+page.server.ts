@@ -1,5 +1,6 @@
 import { error } from "@sveltejs/kit"
 import pc from "$lib/prisma"
+import { getOMDBTitle } from "$lib/helpers/index.js";
 
 export const load = (async ({ params, locals }) => {
 	let user = await pc.user.findUnique({
@@ -42,11 +43,20 @@ export const load = (async ({ params, locals }) => {
 		error(404, { message: "User not found" });
 	}
 
+	let omdbTitlesArr = await Promise.all(user.UserTitleStatuses.map(element => {
+        return getOMDBTitle(element.imdbID)
+    }))
+    let omdbTitles = new Map(
+        omdbTitlesArr.map(title => {
+            return [title.imdbID, title]
+        })
+    )
+
 	let isLoggedIn
 	if (isLoggedIn = locals.user != null) {
 		
 	}
 	let pageTitle = user.username + "'s Profile"
 
-	return { user, isLoggedIn, pageTitle }
+	return { user, isLoggedIn, pageTitle, omdbTitles }
 })
