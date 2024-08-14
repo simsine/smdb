@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Fa from "svelte-fa"
-	import { faPlus, faStar } from "@fortawesome/free-solid-svg-icons"
+	import { faPlus, faStar, faEdit } from "@fortawesome/free-solid-svg-icons"
 	import { goto } from "$app/navigation"
 	import { enhance, applyAction } from "$app/forms"
 	
@@ -96,7 +96,7 @@
 	</main>
 	<div id="user-reviews">
 		<h2>User reviews</h2>
-		<button on:click={handleReviewButton} class="btn"><Fa icon={faPlus} size="lg"/> <span>{userReview ? "Edit your review" : "Write review"}</span></button>
+		<button on:click={handleReviewButton} class="btn"><Fa icon={userReview ? faEdit : faPlus} size="1x"/> <span>{userReview ? "Edit your review" : "Write review"}</span></button>
 		<dialog bind:this={reviewModal}>
 			<h3>{userReview ? "Edit your review" : "Write new review"}</h3>
 			<form class="vertical-flex" method="post" action="?/upsertReview">
