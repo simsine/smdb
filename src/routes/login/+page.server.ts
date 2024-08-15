@@ -8,6 +8,7 @@ export const actions = {
 		const data = await request.formData()
 		const username = data.get("username")
 		const password = data.get("password")
+		const origin = data.get("origin") as string
 
 		if (typeof username !== "string" || username.length < 3 || username.length > 31 || !/^[a-z0-9_-]+$/.test(username)) {
 			return fail(400, { message: "Invalid username" })
@@ -36,6 +37,6 @@ export const actions = {
 			path: ".",
 			...sessionCookie.attributes
 		});
-		redirect(302, "/")
+		redirect(302, origin??"/")
 	}
 }

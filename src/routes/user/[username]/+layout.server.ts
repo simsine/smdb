@@ -16,5 +16,20 @@ export const load = async ({ params }) => {
 		error(404, { message: "User not found" });
 	}
 
-    return { user }
+    let titleCount = await pc.userTitleStatus.count({
+        where: {
+            user: {
+                username: user.username
+            }
+        }
+    })
+    let reviewCount = await pc.review.count({
+        where: {
+            author: {
+                username: user.username
+            }
+        }
+    })
+
+    return { user, titleCount, reviewCount }
 };

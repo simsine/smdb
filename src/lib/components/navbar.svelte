@@ -3,6 +3,7 @@
 	import { faMagnifyingGlass, faUserCircle, faSignOut, faSignIn, faXmark } from "@fortawesome/free-solid-svg-icons"
 
 	export let username
+	export let url
 	let showMobileSearch = false
 </script>
 
@@ -49,7 +50,7 @@
 				<button type="submit" title="Log out"><Fa icon={faSignOut} size="2.5x" color="white" /></button>
 			</form>
 		{:else}
-			<a href="/login"><Fa icon={faSignIn} size="2.5x" color="white" /></a>
+			<a href="/login?origin={url}"><Fa icon={faSignIn} size="2.5x" color="white" /></a>
 		{/if}
 		<button class="mobile-search-button"  on:click={()=>{showMobileSearch = !showMobileSearch}}>
 			<Fa icon={faMagnifyingGlass} size="2.5x" color="white" />

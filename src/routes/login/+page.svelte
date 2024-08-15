@@ -1,5 +1,13 @@
 <script lang="ts">
+	import {onMount} from "svelte"
+	
 	export let form
+
+	let origin:string
+    onMount(() => {
+        const url = new URL(window.location.href)
+        origin = url.searchParams.get("origin") ?? "/"
+    })
 </script>
 
 <main>
@@ -20,6 +28,8 @@
 			</label>
 		</div>
 		
+		<input type="hidden" name="origin" value={origin}>
+
 		{#if form?.message}
 		<p class="error">{form.message}</p>
 		{/if}

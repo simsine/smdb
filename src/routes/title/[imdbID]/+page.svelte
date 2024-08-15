@@ -2,6 +2,7 @@
 	import Fa from "svelte-fa"
 	import { faPlus, faStar, faEdit } from "@fortawesome/free-solid-svg-icons"
 	import { goto } from "$app/navigation"
+	import { page } from "$app/stores"
 	import { enhance, applyAction } from "$app/forms"
 	
 	export let data
@@ -22,7 +23,7 @@
 		if (isLoggedIn) {
 			reviewModal.showModal()
 		} else {
-			goto("/login")
+			goto(`/login?origin=${$page.url.href}`)
 		}
 	}
 	function closeReviewModal() {
@@ -67,7 +68,7 @@
 							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={userTitleStatus.currentEpisode} on:change={onChangeSubmitUserTitleStatus}>
 						</label>
 					{:else}
-						<button class="btn" type="submit"><Fa icon={faPlus} size="lg"/><span>Add to watchlist</span></button>
+						<button class="btn" type="submit"><Fa icon={faPlus}/> <span>Add to watchlist</span></button>
 						<input type="hidden" name="watchStatus" value="PLAN_TO_WATCH">
 						<input type="hidden" name="currentSeason" value="0">
 						<input type="hidden" name="currentEpisode" value="0">
@@ -96,7 +97,7 @@
 	</main>
 	<div id="user-reviews">
 		<h2>User reviews</h2>
-		<button on:click={handleReviewButton} class="btn"><Fa icon={userReview ? faEdit : faPlus} size="1x"/> <span>{userReview ? "Edit your review" : "Write review"}</span></button>
+		<button on:click={handleReviewButton} class="btn"><Fa icon={userReview ? faEdit : faPlus}/> <span>{userReview ? "Edit your review" : "Write review"}</span></button>
 		<dialog bind:this={reviewModal}>
 			<h3>{userReview ? "Edit your review" : "Write new review"}</h3>
 			<form class="vertical-flex" method="post" action="?/upsertReview">

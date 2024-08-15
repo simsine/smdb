@@ -4,6 +4,9 @@
 
 	export let data
 	
+	let username = data.user?.username
+
+	$: url = $page.url.href
 </script>
 
 <svelte:head>
@@ -11,7 +14,7 @@
 </svelte:head>
 
 <div>
-	<Navbar username={data.user?.username}/>
+	<Navbar {username} {url}/>
 	<slot />
 </div>
 
