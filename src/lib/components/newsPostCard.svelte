@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { News } from "@prisma/client"
-	import SvelteMarkdown from "svelte-markdown"
 
 	interface Props {
 		newspost: News;
@@ -13,7 +12,7 @@
 
 <article>
 	<h2>{newspost.title}</h2>
-	<SvelteMarkdown source={newspost.markdown} />
+	<p>{newspost.markdown}</p>
 	<section>
 		<i>{date.getDate()}.{date.getMonth()}.{date.getFullYear()}</i>
 	</section>
