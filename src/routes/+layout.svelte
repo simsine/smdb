@@ -2,11 +2,11 @@
 	import Navbar from "$lib/components/navbar.svelte"
 	import { page } from "$app/stores"
 
-	export let data
+	let { data, children } = $props();
 	
 	let username = data.user?.username
 
-	$: url = $page.url.href
+	let url = $derived($page.url.href)
 </script>
 
 <svelte:head>
@@ -15,7 +15,7 @@
 
 <div>
 	<Navbar {username} {url}/>
-	<slot />
+	{@render children?.()}
 </div>
 
 <style>

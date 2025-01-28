@@ -1,9 +1,9 @@
 <script lang="ts">
 	import {onMount} from "svelte"
 	
-	export let form
+	let { form } = $props();
 
-	let origin:string
+	let origin = $state<string>()
     onMount(() => {
         const url = new URL(window.location.href)
         origin = url.searchParams.get("origin") ?? "/"

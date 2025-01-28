@@ -23,23 +23,22 @@
 
 	import type { SearchQueryResult, SearchQueryResultSearch } from "$lib/types"
 
-	export let data
-	$: searchParameters = data.searchParameters
-	let searchQueryResult: SearchQueryResult
-	$: searchQueryResult = data.searchQueryResult
-	let search: SearchQueryResultSearch
-	$: search = searchQueryResult.Search
-
-	$: totalPages = Math.ceil(searchQueryResult.totalResults / 10)
+	let { data } = $props();
+	let searchParameters = $derived(data.searchParameters)
+	let searchQueryResult: SearchQueryResult = $derived(data.searchQueryResult)
+	
+	let search: SearchQueryResultSearch = $derived(searchQueryResult.Search)
+	
+	let totalPages = $derived(Math.ceil(searchQueryResult.totalResults / 10))
 </script>
 
 {#if searchQueryResult.Response == "True"}
 	<h3><b>Search:</b> "{searchParameters.searchQuery}", found {searchQueryResult.totalResults} results</h3>
 
 	<div class="paginationcontainer">
-		<button class="btn" on:click|preventDefault={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
+		<button class="btn" onclick={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
 		<span>{searchParameters.searchPage} / {totalPages}</span>
-		<button class="btn" on:click|preventDefault={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
+		<button class="btn" onclick={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
 	</div>
 
 	<section>
@@ -49,9 +48,9 @@
 	</section>
 
 	<div class="paginationcontainer">
-		<button class="btn" on:click|preventDefault={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
+		<button class="btn" onclick={() => {paginate(-1)}}><Fa icon={faArrowLeftLong}/></button>
 		<span>{searchParameters.searchPage} / {totalPages}</span>
-		<button class="btn" on:click|preventDefault={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
+		<button class="btn" onclick={() => {paginate(+1)}}><Fa icon={faArrowRightLong}/></button>
 	</div>
 {:else}
 	<h1>Result:</h1>
@@ -67,8 +66,6 @@
 	}
 	.paginationcontainer button {
 		padding: 0.2em 0.75em 0.2em 0.75em;
-		/* background-color: var(--color-main); */
-		
 	}
 
 	section {

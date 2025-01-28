@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let data
+	let { data } = $props();
 	let userTitleStatuses = data.user.UserTitleStatuses
 	let omdbTitles = data.omdbTitles
 	let reviews = data.user.reviews

@@ -2,7 +2,11 @@
 	import type { News } from "@prisma/client"
 	import SvelteMarkdown from "svelte-markdown"
 
-	export let newspost: News
+	interface Props {
+		newspost: News;
+	}
+
+	let { newspost }: Props = $props();
 
 	let date = new Date(newspost.date)
 </script>

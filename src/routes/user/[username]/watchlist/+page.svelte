@@ -3,7 +3,7 @@
     import { onMount } from "svelte"
     import { pushState } from "$app/navigation"
 
-    export let data
+    let { data } = $props();
     
     const watchStatusMap = new Map([
         [undefined,"Any"],
@@ -17,9 +17,9 @@
     interface FilterSelections {
         [status: string]: undefined|string
     }
-    let filterSelections: FilterSelections = {
+    let filterSelections: FilterSelections = $state({
         status: undefined,
-    }
+    })
 
     onMount(() => {
         const url = new URL(window.location.href)
@@ -85,17 +85,19 @@
 
 <div class="filter-container">
     {#each watchStatusMap.entries() as [key, value]}
-        <button on:click|preventDefault={(event)=>handleFilterButton(key, event)} role="tab" class="btn {filterSelections.status === key ? "active" : ""}">{value}</button>
+        <button onclick={(event)=>handleFilterButton(key, event)} role="tab" class="btn {filterSelections.status === key ? "active" : ""}">{value}</button>
     {/each}
 </div>
 
 <SvelteTable {columns} {rows} bind:filterSelections={filterSelections} rowKey="id">
-    <tr class="row" slot="row" let:row>
-        <td><a href="/title/{row.imdbID}"><img src={row.image} alt="{row.title} poster" loading="lazy" height="100px" width="75"></a></td>
-        <td><a href="/title/{row.imdbID}">{row.title}</a></td>
-        <td>{watchStatusMap.get(row.status)}</td>
-        <!-- <td>{row.type}</td> -->
-    </tr>
+    {#snippet row({ row })}
+        <tr class="row"  >
+            <td><a href="/title/{row.imdbID}"><img src={row.image} alt="{row.title} poster" loading="lazy" height="100px" width="75"></a></td>
+            <td><a href="/title/{row.imdbID}">{row.title}</a></td>
+            <td>{watchStatusMap.get(row.status)}</td>
+            <!-- <td>{row.type}</td> -->
+        </tr>
+    {/snippet}
 </SvelteTable>
 
 <style>

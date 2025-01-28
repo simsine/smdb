@@ -92,7 +92,6 @@ export const actions = {
 				watchStatus: watchStatus,
 			},
 		})
-		console.log(userTitleStatus)
 		return userTitleStatus
 	},
 	upsertReview: async (event) => {

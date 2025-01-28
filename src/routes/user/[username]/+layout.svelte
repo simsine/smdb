@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let data
+    let { data, children } = $props();
 </script>
 
 <main>
@@ -16,7 +16,7 @@
         </div>
     </aside>
     <div>
-        <slot></slot>
+        {@render children?.()}
     </div>
 </main>
 

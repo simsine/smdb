@@ -1,4 +1,3 @@
-import type { PageServerLoad } from "./$types"
 import { SECRET_APIKEY } from "$env/static/private"
 
 export const load = (async ({ fetch, url }) => {
@@ -13,4 +12,4 @@ export const load = (async ({ fetch, url }) => {
 		searchParameters: { searchFilter, searchQuery, searchPage },
 		searchQueryResult,
 	}
-}) satisfies PageServerLoad
+})

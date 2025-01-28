@@ -2,9 +2,8 @@
 	import Fa from "svelte-fa"
 	import { faMagnifyingGlass, faUserCircle, faSignOut, faSignIn, faXmark } from "@fortawesome/free-solid-svg-icons"
 
-	export let username
-	export let url
-	let showMobileSearch = false
+	let { username, url } = $props();
+	let showMobileSearch = $state(false)
 </script>
 
 <nav>
@@ -22,7 +21,7 @@
 			</div>
 			<input type="hidden" name="p" value="1" />
 		</form>
-		<button on:click={()=>{showMobileSearch = !showMobileSearch}}>
+		<button onclick={()=>{showMobileSearch = !showMobileSearch}}>
 			<Fa icon={faXmark} size="2.5x" color="white" />
 		</button>
 	{:else}
@@ -52,7 +51,7 @@
 		{:else}
 			<a href="/login?origin={url}"><Fa icon={faSignIn} size="2.5x" color="white" /></a>
 		{/if}
-		<button class="mobile-search-button"  on:click={()=>{showMobileSearch = !showMobileSearch}}>
+		<button class="mobile-search-button" onclick={()=>{showMobileSearch = !showMobileSearch}}>
 			<Fa icon={faMagnifyingGlass} size="2.5x" color="white" />
 		</button>
 	{/if}

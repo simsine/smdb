@@ -1,7 +1,7 @@
 <script lang="ts">
 	import NewsPostCard from "$lib/components/newsPostCard.svelte"
 
-	export let data
+	let { data } = $props();
 </script>
 
 <h1>Welcome to <b>sMDB</b></h1>

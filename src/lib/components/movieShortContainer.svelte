@@ -1,6 +1,10 @@
 <script lang="ts">
 	import type { MovieShort } from "$lib/types"
-	export let movie: MovieShort
+	interface Props {
+		movie: MovieShort;
+	}
+
+	let { movie }: Props = $props();
 </script>
 
 <a href="/title/{movie.imdbID}">

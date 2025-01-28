@@ -5,29 +5,29 @@
 	import { page } from "$app/stores"
 	import { enhance, applyAction } from "$app/forms"
 	
-	export let data
+	let { data } = $props();
 	let isLoggedIn = data.isLoggedIn
 	let movie = data.movie
 	let reviews = data.reviews
-	let userTitleStatus = data.userTitleStatus
+	let userTitleStatus = $state(data.userTitleStatus)
 	let userReview = data.userReview
 
-	let userTitleStatusForm:HTMLFormElement
-	let reviewModal:HTMLDialogElement
+	let userTitleStatusForm = $state<HTMLFormElement>()
+	let reviewModal = $state<HTMLDialogElement>()
 	
 	function onChangeSubmitUserTitleStatus() {
-		userTitleStatusForm.requestSubmit()
+		userTitleStatusForm?.requestSubmit()
 	}
 
 	function handleReviewButton() {
 		if (isLoggedIn) {
-			reviewModal.showModal()
+			reviewModal?.showModal()
 		} else {
 			goto(`/login?origin=${$page.url.href}`)
 		}
 	}
 	function closeReviewModal() {
-		reviewModal.close()
+		reviewModal?.close()
 	}
 </script>
 
@@ -53,7 +53,7 @@
 				}}>
 					{#if userTitleStatus != null}
 						<label for="watchStatus">Status
-							<select name="watchStatus" title="Watch status" value={userTitleStatus.watchStatus} on:change={onChangeSubmitUserTitleStatus}>
+							<select name="watchStatus" title="Watch status" value={userTitleStatus.watchStatus} onchange={onChangeSubmitUserTitleStatus}>
 								<option value="PLAN_TO_WATCH">Plan to watch</option>
 								<option value="WATCHING">Watching</option>
 								<option value="ON_HOLD">On hold</option>
@@ -62,10 +62,10 @@
 							</select>
 						</label>
 						<label for="currentSeason">Season
-							<input type="number" inputmode="numeric" name="currentSeason" title="Current season" min="0" max="9999" value={userTitleStatus.currentSeason} on:change={onChangeSubmitUserTitleStatus}>
+							<input type="number" inputmode="numeric" name="currentSeason" title="Current season" min="0" max="9999" value={userTitleStatus.currentSeason} onchange={onChangeSubmitUserTitleStatus}>
 						</label>
 						<label for="currentSeason">Episode
-							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={userTitleStatus.currentEpisode} on:change={onChangeSubmitUserTitleStatus}>
+							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={userTitleStatus.currentEpisode} onchange={onChangeSubmitUserTitleStatus}>
 						</label>
 					{:else}
 						<button class="btn" type="submit"><Fa icon={faPlus}/> <span>Add to watchlist</span></button>
@@ -97,7 +97,7 @@
 	</main>
 	<div id="user-reviews">
 		<h2>User reviews</h2>
-		<button on:click={handleReviewButton} class="btn"><Fa icon={userReview ? faEdit : faPlus}/> <span>{userReview ? "Edit your review" : "Write review"}</span></button>
+		<button onclick={handleReviewButton} class="btn"><Fa icon={userReview ? faEdit : faPlus}/> <span>{userReview ? "Edit your review" : "Write review"}</span></button>
 		<dialog bind:this={reviewModal}>
 			<h3>{userReview ? "Edit your review" : "Write new review"}</h3>
 			<form class="vertical-flex" method="post" action="?/upsertReview">
@@ -126,7 +126,7 @@
 					<option value="1">1</option>
 				</select>
 				<div class="horizontal-flex">
-					<button type="button" on:click={closeReviewModal}>Cancel</button>
+					<button type="button" onclick={closeReviewModal}>Cancel</button>
 					<button form="delete-review">Delete review</button>
 					<button type="submit">Submit review</button>
 				</div>
