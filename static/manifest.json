@@ -1,0 +1,6 @@
+{
+	"name": "sMDB",
+	"short_name": "sMDB",
+	"display": "standalone",
+	"start_url": "/"
+}
