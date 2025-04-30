@@ -43,8 +43,8 @@ export const load = (async ({ params, locals }) => {
 		error(404, { message: "User not found" });
 	}
 
-	let omdbTitlesArr = await Promise.all(user.UserTitleStatuses.map(element => {
-        return getOMDBTitle(element.imdbID)
+	let omdbTitlesArr = await Promise.all(user.UserTitleStatuses.map(element=> element.imdbID).concat(user.reviews.map(element => element.imdbID)).map(element => {
+        return getOMDBTitle(element)
     }))
     let omdbTitles = new Map(
         omdbTitlesArr.map(title => {
