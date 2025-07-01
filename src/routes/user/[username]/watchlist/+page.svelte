@@ -6,7 +6,7 @@
     let { data } = $props();
     
     const watchStatusMap = new Map([
-        [undefined,"Any"],
+        [undefined,"All"],
         ["WATCHING","Watching"],
         ["PLAN_TO_WATCH","Plan to watch"],
         ["COMPLETED","Completed"],
@@ -15,7 +15,7 @@
     ])
 
     interface FilterSelections {
-        [status: string]: undefined|string
+        [status: string]: string|undefined
     }
     let filterSelections: FilterSelections = $state({
         status: undefined,
@@ -23,20 +23,20 @@
 
     onMount(() => {
         const url = new URL(window.location.href)
-        let presetFilter = url.searchParams.get("f")
-        if (presetFilter !== null) {
-            filterSelections.status = presetFilter
+        let presetStatusFilter = url.searchParams.get("status")
+        if (presetStatusFilter !== null) {
+            filterSelections.status = presetStatusFilter
         }
     })
 
-    function handleFilterButton(filterValue: undefined|string, event:Event) {
+    function handleStatusFilterButton(filterValue: string|undefined) {
         filterSelections.status = filterValue
 
         const url = new URL(window.location.href)
         if (filterValue === undefined) {
-            url.searchParams.delete("f")
+            url.searchParams.delete("status")
         } else {
-            url.searchParams.set("f", filterValue || "")
+            url.searchParams.set("status", filterValue || "")
         }
         pushState(url, data)
     }
@@ -59,14 +59,7 @@
             key: "status",
             title: "Status",
             value: (v: { status: any }) => v.status,
-            sortable: true,
         },
-        //{
-        //    key: "type",
-        //    title: "Type",
-        //    value: (v: { type: any }) => v.type,
-        //    sortable: true,
-        //},
     ]
     const rows = data.userTitleStatuses.map((userStatus, index) => { 
         let omdbTitle = data.omdbTitles.get(userStatus.imdbID)
@@ -84,20 +77,19 @@
 <h2>Watchlist</h2>
 
 <div class="filter-container">
-    {#each watchStatusMap.entries() as [key, value]}
-        <button onclick={(event)=>handleFilterButton(key, event)} role="tab" class="btn {filterSelections.status === key ? "active" : ""}">{value}</button>
+    {#each watchStatusMap.entries() as [status, value]}
+        <button onclick={() => handleStatusFilterButton(status)} role="tab" class="btn {status === filterSelections.status ? "active" : ""}">{value}</button>
     {/each}
 </div>
 
-<SvelteTable {columns} {rows} bind:filterSelections={filterSelections} rowKey="id">
-    {#snippet row({ row })}
-        <tr class="row"  >
-            <td><a href="/title/{row.imdbID}"><img src={row.image} alt="{row.title} poster" loading="lazy" height="100px" width="75"></a></td>
-            <td><a href="/title/{row.imdbID}">{row.title}</a></td>
-            <td>{watchStatusMap.get(row.status)}</td>
-            <!-- <td>{row.type}</td> -->
-        </tr>
-    {/snippet}
+<SvelteTable {columns} {rows} bind:filterSelections={filterSelections} rowKey="id" sortBy="title">
+{#snippet row({ row }: any)}
+    <tr class="row"  >
+        <td><a href="/title/{row.imdbID}"><img src={row.image} alt="{row.title} poster" loading="lazy" height="100px" width="75"></a></td>
+        <td><a href="/title/{row.imdbID}">{row.title}</a></td>
+        <td>{watchStatusMap.get(row.status)}</td>
+    </tr>
+{/snippet}
 </SvelteTable>
 
 <style>
