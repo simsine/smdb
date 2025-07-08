@@ -2,17 +2,9 @@
     import SvelteTable from 'svelte-table';
     import { onMount } from "svelte"
     import { pushState } from "$app/navigation"
+	import { watchStatusMap } from '$lib/helpers/frontend'
 
     let { data } = $props();
-    
-    const watchStatusMap = new Map([
-        [undefined,"All"],
-        ["WATCHING","Watching"],
-        ["PLAN_TO_WATCH","Plan to watch"],
-        ["COMPLETED","Completed"],
-        ["ON_HOLD","On hold"],
-        ["DROPPED","Dropped"],
-    ])
 
     interface FilterSelections {
         [status: string]: string|undefined

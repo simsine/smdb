@@ -41,10 +41,10 @@
 				<p><span title="Type">{movie.Type}</span> | <span title="Release year">{movie.Year}</span> | <span title="Age rating">{movie.Rated}</span> | <span title="Runtime">{movie.Runtime}</span></p>
 			</div>
 			<div class="movie-genres">
-				{#each movie.Genre.split(", ") as genre} <span class="genre">{genre}</span>{/each}
+				{#each movie.Genre.split(", ") as genre}<span class="genre">{genre}</span>{/each}
 			</div>
 				<form action="?/upsertWatchStatus" method="post" class="watch-status-form horizontal-flex" bind:this={userTitleStatusForm} use:enhance={({}) => {
-					return async ({result}) => {
+					return async ({ result }) => {
 						await applyAction(result)
 						if (result.type === "success") {
 							//@ts-ignore
@@ -98,9 +98,10 @@
 	</main>
 	<div id="user-reviews">
 		<h2>User reviews</h2>
+		<hr>
 		<button onclick={handleReviewButton} class="btn"><Fa icon={userReview ? faEdit : faPlus}/> <span>{userReview ? "Edit your review" : "Write review"}</span></button>
 		<dialog bind:this={reviewModal}>
-			<h3>{userReview ? "Edit your review" : "Write new review"}</h3>
+			<h2>{userReview ? "Edit your review" : "Write new review"}</h2>
 			<form class="vertical-flex" method="post" action="?/upsertReview">
 				<label for="title">
 					Title
@@ -125,9 +126,9 @@
 					<option value="1">1</option>
 				</select>
 				<div class="horizontal-flex">
-					<button type="button" onclick={closeReviewModal}>Cancel</button>
-					<button form="delete-review">Delete review</button>
-					<button type="submit">Submit review</button>
+					<button class="btn" type="button" onclick={closeReviewModal}>Cancel</button>
+					{#if userReview}<button class="btn" form="delete-review">Delete review</button>{/if}
+					<button class="btn" type="submit">Submit review</button>
 				</div>
 			</form>
 			<form class="vertical-flex" action="?/deleteReview" method="post" id="delete-review"></form>

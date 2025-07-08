@@ -1,6 +1,6 @@
 import { error, redirect } from "@sveltejs/kit"
 import { WatchStatus } from "@prisma/client"
-import { getOMDBTitle } from "$lib/helpers"
+import { getOMDBTitle } from "$lib/helpers/backend"
 import pc from "$lib/prisma"
 
 export const load = async ({params, locals }) => {

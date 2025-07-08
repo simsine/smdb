@@ -1,4 +1,4 @@
-import { getFullStatuses, getOMDBTitle } from '$lib/helpers/index.js';
+import { getFullStatuses, getOMDBTitle } from '$lib/helpers/backend.js';
 import pc from '$lib/prisma.js';
 import { error } from '@sveltejs/kit';
 

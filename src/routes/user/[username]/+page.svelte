@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Star from '$lib/components/star.svelte'
-	import { faStar } from '@fortawesome/free-solid-svg-icons/index.js'
-	import Fa from 'svelte-fa'
+	import { watchStatusMap } from '$lib/helpers/frontend'
 
 	let { data } = $props();
 	let fullStatuses = data.fullStatuses
@@ -21,7 +20,7 @@
 			</a>
 			<div>
 				<p><a href="/title/{fullStatus.status.imdbID}">{fullStatus.omdbTitle.Title}</a></p>
-				<small>{fullStatus.status.watchStatus}</small><br>
+				<small>{watchStatusMap.get(fullStatus.status.watchStatus)}</small><br>
 				<small>Season</small> <b>{fullStatus.status.currentSeason}</b> <small>Episode</small> <b>{fullStatus.status.currentEpisode}</b>
 			</div>
 			<div class="flex-1"></div>
