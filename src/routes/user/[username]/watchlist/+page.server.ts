@@ -1,4 +1,4 @@
-import { getOMDBTitle } from '$lib/helpers/index.js';
+import { getFullStatuses, getOMDBTitle } from '$lib/helpers/index.js';
 import pc from '$lib/prisma.js';
 import { error } from '@sveltejs/kit';
 
@@ -17,13 +17,11 @@ export const load = (async ({ params }) => {
             userId: user.id
         },
     })
-    let omdbTitlesArr = await Promise.all(userTitleStatuses.map(element => {
-        return getOMDBTitle(element.imdbID)
-    }))
-    let omdbTitles = new Map(
-        omdbTitlesArr.map(title => {
-            return [title.imdbID, title]
-        })
-    )
-    return { pageTitle: user.username + "'s watchlist", userTitleStatuses, omdbTitles };
+
+    const fullStatuses = getFullStatuses(userTitleStatuses)
+
+    return { 
+        pageTitle: user.username + "'s watchlist",
+        fulLStatuses: await fullStatuses
+    };
 })

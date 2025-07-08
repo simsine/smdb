@@ -1,6 +1,7 @@
 import { SECRET_APIKEY } from "$env/static/private"
 import pc from "$lib/prisma"
 import type { MovieFull } from "$lib/types"
+import type { Review, UserTitleStatus } from "@prisma/client"
 
 export async function getOMDBTitle(imdbID:string):Promise<MovieFull> {
     const storedTitle = await pc.omdbTitle.findUnique({
@@ -35,4 +36,18 @@ export async function getOMDBTitle(imdbID:string):Promise<MovieFull> {
         }
         return title
     }
+}
+
+export function getFullStatuses(userTitleStatuses: Array<UserTitleStatus>) {
+    return Promise.all(userTitleStatuses.map(async (status) => {
+        const omdbTitle = await getOMDBTitle(status.imdbID);
+        return { status, omdbTitle };
+    }));
+}
+
+export function getFullReviews(reviews: Array<Review>) {
+    return Promise.all(reviews.map(async (review) => {
+        const omdbTitle = await getOMDBTitle(review.imdbID);
+        return { review, omdbTitle };
+    }));
 }

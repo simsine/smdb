@@ -1,8 +1,11 @@
 <script lang="ts">
+	import Star from '$lib/components/star.svelte'
+	import { faStar } from '@fortawesome/free-solid-svg-icons/index.js'
+	import Fa from 'svelte-fa'
+
 	let { data } = $props();
-	let userTitleStatuses = data.user.UserTitleStatuses
-	let omdbTitles = data.omdbTitles
-	let reviews = data.user.reviews
+	let fullStatuses = data.fullStatuses
+	let fullReviews = data.fullReviews
 </script>
 
 <section>
@@ -11,18 +14,18 @@
 		<a href="/user/{data.user.username}/watchlist">See more</a>
 	</div>
 	<hr>
-	{#each userTitleStatuses as userTitleStatus}
+	{#each fullStatuses as fullStatus}
 		<article>
-			<a href="/title/{userTitleStatus.imdbID}">
-				<img src="{omdbTitles.get(userTitleStatus.imdbID)?.Poster}" alt="" height="100px" width="75px">
+			<a href="/title/{fullStatus.status.imdbID}">
+				<img src="{fullStatus.omdbTitle.Poster}" alt="" height="100px" width="75px">
 			</a>
 			<div>
-				<p><a href="/title/{userTitleStatus.imdbID}">{omdbTitles.get(userTitleStatus.imdbID)?.Title}</a></p>
-				<small>{userTitleStatus.watchStatus}</small><br>
-				<small>Season</small> <b>{userTitleStatus.currentSeason}</b> <small>Episode</small> <b>{userTitleStatus.currentEpisode}</b>
+				<p><a href="/title/{fullStatus.status.imdbID}">{fullStatus.omdbTitle.Title}</a></p>
+				<small>{fullStatus.status.watchStatus}</small><br>
+				<small>Season</small> <b>{fullStatus.status.currentSeason}</b> <small>Episode</small> <b>{fullStatus.status.currentEpisode}</b>
 			</div>
 			<div class="flex-1"></div>
-			<small>{userTitleStatus.updatedAt.toDateString()}</small>
+			<small>{fullStatus.status.updatedAt.toDateString()}</small>
 		</article>
 	{/each}
 </section>
@@ -32,18 +35,18 @@
 		<a href="/user/{data.user.username}/reviews">See more</a>
 	</div>
 	<hr>
-	{#each reviews as review}
+	{#each fullReviews as fullReview}
 		<article>
-			<a href="/title/{review.imdbID}">
-				<img src="{omdbTitles.get(review.imdbID)?.Poster}" alt="" height="100px" width="75px">
+			<a href="/title/{fullReview.review.imdbID}">
+				<img src="{fullReview.omdbTitle.Poster}" alt="" height="100px" width="75px">
 			</a>
 			<div>
-				<p><a href="/title/{review.imdbID}">{review.title}</a></p>
-				<p>{review.content}</p>
-				<p>{review.rating}/10</p>
+				<p><a href="/title/{fullReview.review.imdbID}">{fullReview.omdbTitle.Title}</a></p>
+				<p>{fullReview.review.content?.slice(0, 25)}</p>
+				<p>{fullReview.review.rating}/10 <Star/></p>
 			</div>
 			<div style="flex:1"></div>
-			<p>{review.createdAt.toDateString()}</p>
+			<p>{fullReview.review.createdAt.toDateString()}</p>
 		</article>
 	{/each}
 </section>

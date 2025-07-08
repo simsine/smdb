@@ -53,7 +53,7 @@
             title: "Title",
             value: (v: { title: any }) => v.title,
             sortable: true,
-            // searchValue: (v: {title: string}, s: string) => v.title.toString().toLowerCase().includes(s.toLowerCase()),
+            searchValue: (v: {title: string}, s: string) => v.title.toString().toLowerCase().includes(s.toLowerCase()),
         },
         {
             key: "status",
@@ -61,15 +61,14 @@
             value: (v: { status: any }) => v.status,
         },
     ]
-    const rows = data.userTitleStatuses.map((userStatus, index) => { 
-        let omdbTitle = data.omdbTitles.get(userStatus.imdbID)
+    const rows = data.fulLStatuses.map((status, index) => {
         return {
             id: index,
-            image: omdbTitle?.Poster,
-            title: omdbTitle?.Title,
-            type: omdbTitle?.Type,
-            imdbID: omdbTitle?.imdbID,
-            status: userStatus.watchStatus,
+            image: status.omdbTitle.Poster,
+            title: status.omdbTitle.Title,
+            type: status.omdbTitle.Type,
+            imdbID: status.status.imdbID,
+            status: status.status.watchStatus,
         }
     })
 </script>
@@ -84,7 +83,7 @@
 
 <SvelteTable {columns} {rows} bind:filterSelections={filterSelections} rowKey="id" sortBy="title">
 {#snippet row({ row }: any)}
-    <tr class="row"  >
+    <tr class="row">
         <td><a href="/title/{row.imdbID}"><img src={row.image} alt="{row.title} poster" loading="lazy" height="100px" width="75"></a></td>
         <td><a href="/title/{row.imdbID}">{row.title}</a></td>
         <td>{watchStatusMap.get(row.status)}</td>

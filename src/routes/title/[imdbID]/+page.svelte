@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Fa from "svelte-fa"
-	import { faPlus, faStar, faEdit } from "@fortawesome/free-solid-svg-icons"
+	import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons"
 	import { goto } from "$app/navigation"
 	import { page } from "$app/stores"
 	import { enhance, applyAction } from "$app/forms"
+	import Star from "$lib/components/star.svelte"
 	
 	let { data } = $props();
 	let isLoggedIn = data.isLoggedIn
@@ -53,7 +54,7 @@
 				}}>
 					{#if userTitleStatus != null}
 						<label for="watchStatus">Status
-							<select name="watchStatus" title="Watch status" value={userTitleStatus.watchStatus} onchange={onChangeSubmitUserTitleStatus}>
+							<select id="watchStatus" name="watchStatus" title="Watch status" value={userTitleStatus.watchStatus} onchange={onChangeSubmitUserTitleStatus}>
 								<option value="PLAN_TO_WATCH">Plan to watch</option>
 								<option value="WATCHING">Watching</option>
 								<option value="ON_HOLD">On hold</option>
@@ -62,10 +63,10 @@
 							</select>
 						</label>
 						<label for="currentSeason">Season
-							<input type="number" inputmode="numeric" name="currentSeason" title="Current season" min="0" max="9999" value={userTitleStatus.currentSeason} onchange={onChangeSubmitUserTitleStatus}>
+							<input id="currentSeason" name="currentSeason" title="Current season" type="number" inputmode="numeric" min="0" max="9999" value={userTitleStatus.currentSeason} onchange={onChangeSubmitUserTitleStatus}>
 						</label>
-						<label for="currentSeason">Episode
-							<input type="number" inputmode="numeric" name="currentEpisode" title="Current episode" min="0" max="9999" value={userTitleStatus.currentEpisode} onchange={onChangeSubmitUserTitleStatus}>
+						<label for="currentEpisode">Episode
+							<input id="currentEpisode" name="currentEpisode" title="Current episode" type="number" inputmode="numeric"  min="0" max="9999" value={userTitleStatus.currentEpisode} onchange={onChangeSubmitUserTitleStatus}>
 						</label>
 					{:else}
 						<button class="btn" type="submit"><Fa icon={faPlus}/> <span>Add to watchlist</span></button>
@@ -84,7 +85,7 @@
 		</div>
 		<aside>
 			<div class="">
-				<h2><b>Ratings</b> <span class="star-rating"><Fa icon={faStar} size="xs"/></span></h2>
+				<h2><b>Ratings</b> <Star/></h2>
 				<hr>
 			{#each movie.Ratings as rating}
 				<p><b>{rating.Source}</b></p>	
@@ -109,9 +110,7 @@
 					Content
 				</label>
 				<textarea name="content" id="content" cols="25" rows="5" maxlength="250" value={userReview?.content ?? ""}></textarea>
-				<label for="rating">
-					Rating <span class="star-rating"><Fa icon={faStar}/></span>
-				</label>
+				<label for="rating">Rating <Star/></label>
 				<select name="rating" id="rating" title="Rating" required value={userReview?.rating.toString() ?? ""}>
 					<option value="">Select</option>
 					<option value="10">10</option>
@@ -139,10 +138,10 @@
 				-
 				<a href="/user/{review.author.username}">{review.author.username}</a>
 			</h3>
-			<p>{review.rating}/10 <span class="star-rating"><Fa icon={faStar}/></span></p>
+			<p>{review.rating}/10 <Star/></p>
 			<p>{review.content}</p>
 		{:else}
-			<p>No reviews for this {movie.Type} yet :(</p>
+			<p>No reviews for this {movie.Type} yet :&#40;</p>
 		{/each}
 	</div>
 </article>
@@ -155,9 +154,6 @@
 	}
 	.movie-info {
 		flex: 1;
-	}
-	.star-rating {
-		color: var(--color-main);
 	}
 	main {
 		display: flex;

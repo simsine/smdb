@@ -1,6 +1,6 @@
 import { error } from "@sveltejs/kit"
 import pc from "$lib/prisma"
-import { getOMDBTitle } from "$lib/helpers/index.js";
+import { getFullReviews, getFullStatuses, getOMDBTitle } from "$lib/helpers/index.js";
 
 export const load = (async ({ params, locals }) => {
 	let user = await pc.user.findUnique({
@@ -15,26 +15,12 @@ export const load = (async ({ params, locals }) => {
 				orderBy:{
 					createdAt:"desc"
 				},
-				select: {
-					imdbID:true,
-					createdAt:true,
-					title:true,
-					content:true,
-					rating:true
-				}
 			},
 			UserTitleStatuses: {
 				take: 3,
 				orderBy:{
 					updatedAt:"desc"
 				},
-				select: {
-					imdbID:true,
-					watchStatus:true,
-					currentSeason:true,
-					currentEpisode:true,
-					updatedAt:true
-				}
 			}
 		},
 	})
@@ -43,20 +29,19 @@ export const load = (async ({ params, locals }) => {
 		error(404, { message: "User not found" });
 	}
 
-	let omdbTitlesArr = await Promise.all(user.UserTitleStatuses.map(element=> element.imdbID).concat(user.reviews.map(element => element.imdbID)).map(element => {
-        return getOMDBTitle(element)
-    }))
-    let omdbTitles = new Map(
-        omdbTitlesArr.map(title => {
-            return [title.imdbID, title]
-        })
-    )
+	const fullStatuses = getFullStatuses(user.UserTitleStatuses)
 
-	let isLoggedIn
-	if (isLoggedIn = locals.user != null) {
-		
-	}
+	const fullReviews = getFullReviews(user.reviews)
+
+	let isLoggedIn = locals.user != null
+
 	let pageTitle = user.username + "'s Profile"
 
-	return { user, isLoggedIn, pageTitle, omdbTitles }
+	return {
+		user,
+		isLoggedIn,
+		pageTitle,
+		fullStatuses: await fullStatuses,
+		fullReviews: await fullReviews
+	}
 })
