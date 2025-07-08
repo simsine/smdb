@@ -8,7 +8,7 @@
 	let { watchStatus }: Props = $props()
 </script>
 
-<div class={["status-colorbar", watchStatus.toString()]}></div>
+<div class={["status-colorbar", watchStatus]}></div>
 
 <style>
 	.status-colorbar {

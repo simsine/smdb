@@ -15,19 +15,21 @@
 	</div>
 	<hr>
 	{#each fullStatuses as fullStatus}
-		<article>
-			<StatusColorBar watchStatus={fullStatus.status.watchStatus}/>
-			<a href="/title/{fullStatus.status.imdbID}">
-				<img src="{fullStatus.omdbTitle.Poster}" alt="" height="100px" width="75px">
-			</a>
-			<div>
-				<p><a href="/title/{fullStatus.status.imdbID}">{fullStatus.omdbTitle.Title}</a></p>
-				<small>{watchStatusMap.get(fullStatus.status.watchStatus)}</small><br>
-				<small>Season</small> <b>{fullStatus.status.currentSeason}</b> <small>Episode</small> <b>{fullStatus.status.currentEpisode}</b>
-			</div>
-			<div class="flex-1"></div>
-			<small>{fullStatus.status.updatedAt.toDateString()}</small>
-		</article>
+	<article>
+		<StatusColorBar watchStatus={fullStatus.status.watchStatus}/>
+		<a href="/title/{fullStatus.status.imdbID}">
+			<img src="{fullStatus.omdbTitle.Poster}" alt="" height="100px" width="75px">
+		</a>
+		<div>
+			<p><a href="/title/{fullStatus.status.imdbID}">{fullStatus.omdbTitle.Title}</a></p>
+			<small>{watchStatusMap.get(fullStatus.status.watchStatus)}</small><br>
+			{#if fullStatus.omdbTitle.Type === "series"}
+			<small>Season</small> <b>{fullStatus.status.currentSeason}</b> <small>Episode</small> <b>{fullStatus.status.currentEpisode}</b>
+			{/if}
+		</div>
+		<div class="flex-1"></div>
+		<small>{fullStatus.status.updatedAt.toDateString()}</small>
+	</article>
 	{/each}
 </section>
 <section>
@@ -37,18 +39,18 @@
 	</div>
 	<hr>
 	{#each fullReviews as fullReview}
-		<article>
-			<a href="/title/{fullReview.review.imdbID}">
-				<img src="{fullReview.omdbTitle.Poster}" alt="{fullReview.omdbTitle.Title} poster" height="100px" width="75px">
-			</a>
-			<div>
-				<p><a href="/title/{fullReview.review.imdbID}">{fullReview.omdbTitle.Title}</a></p>
-				<p>{fullReview.review.content?.slice(0, 25)}</p>
-				<p>{fullReview.review.rating}/10 <Star/></p>
-			</div>
-			<div style="flex:1"></div>
-			<p>{fullReview.review.createdAt.toDateString()}</p>
-		</article>
+	<article>
+		<a href="/title/{fullReview.review.imdbID}">
+			<img src="{fullReview.omdbTitle.Poster}" alt="{fullReview.omdbTitle.Title} poster" height="100px" width="75px">
+		</a>
+		<div>
+			<p><a href="/title/{fullReview.review.imdbID}">{fullReview.omdbTitle.Title}</a></p>
+			<p>{fullReview.review.content?.slice(0, 25)}</p>
+			<p>{fullReview.review.rating}/10 <Star/></p>
+		</div>
+		<div style="flex:1"></div>
+		<p>{fullReview.review.createdAt.toDateString()}</p>
+	</article>
 	{/each}
 </section>
 
