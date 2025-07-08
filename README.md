@@ -1,11 +1,9 @@
 # smdb - simsine Movie DataBase
 
-## Intent
-
 smdb is a website created to combine the best of services like IMDb, Letterboxd, MyAnimeList and more into a single application.
 This is because i found these to lack certain features when it comes to tracking movies watched aswell as progress in watching series.
 
-## Tech choices
+## Technologies
 
 As for information on the movies we want to track we fetch this from the [OMDb API](https://www.omdbapi.com/) which is a public API serving information based on IMDb.
 
@@ -27,8 +25,6 @@ Requirements for developing this application includes:
 
 You must first set the correct enviornment variables for the project, copy the example file with the following command
 
-
-
 ```sh
 cp .env.example .env && nano .env
 ```
@@ -42,18 +38,10 @@ Then you must install the dependencies using the following command
 pnpm i
 ```
 
-Then you must have an active Postgres instance, this can be done easiest with the provided docker compose file.
-
-> Do note that this configuration does not persist the data, and it will be lost on shutdown.
+Then you must have an active Postgres instance, this can be done easiest with the following command
 
 ```sh
-docker compose -f ./docker/dev/docker-compose.yml up -d
-```
-
-It can be stopped again with
-
-```sh
-docker compose -f ./docker/dev/docker-compose.yml down
+docker run --name smdb-db -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres:alpine
 ```
 
 When you make changes to the schema you can generate new bindings by running
