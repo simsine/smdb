@@ -3,6 +3,7 @@
     import { onMount } from "svelte"
     import { pushState } from "$app/navigation"
 	import { watchStatusMap } from '$lib/helpers/frontend'
+	import StatusColorBar from '$lib/components/StatusColorBar.svelte'
 
     let { data } = $props();
 
@@ -36,9 +37,9 @@
     //? SvelteTable config //
     const columns = [
         {
-            key: "image",
-            title: "Image",
-            value: (v: { image: any }) => v.image,
+            key: "poster",
+            title: "Poster",
+            value: (v: { poster: any }) => v.poster,
         },
         {
             key: "title",
@@ -56,7 +57,7 @@
     const rows = data.fulLStatuses.map((status, index) => {
         return {
             id: index,
-            image: status.omdbTitle.Poster,
+            poster: status.omdbTitle.Poster,
             title: status.omdbTitle.Title,
             type: status.omdbTitle.Type,
             imdbID: status.status.imdbID,
@@ -76,7 +77,7 @@
 <SvelteTable {columns} {rows} bind:filterSelections={filterSelections} rowKey="id" sortBy="title">
 {#snippet row({ row }: any)}
     <tr class="row">
-        <td><a href="/title/{row.imdbID}"><img src={row.image} alt="{row.title} poster" loading="lazy" height="100px" width="75"></a></td>
+        <td style="display: flex; gap: .5rem"><StatusColorBar watchStatus={row.status}/><a href="/title/{row.imdbID}"><img src={row.poster} alt="{row.title} poster" loading="lazy" height="100px" width="75"></a></td>
         <td><a href="/title/{row.imdbID}">{row.title}</a></td>
         <td>{watchStatusMap.get(row.status)}</td>
     </tr>

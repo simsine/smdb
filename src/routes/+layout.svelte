@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Navbar from "$lib/components/navbar.svelte"
+	import Navbar from "$lib/components/Navbar.svelte"
 	import { page } from "$app/stores"
 
 	let { data, children } = $props();

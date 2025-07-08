@@ -4,7 +4,7 @@
 	import { goto } from "$app/navigation"
 	import { page } from "$app/stores"
 	import { enhance, applyAction } from "$app/forms"
-	import Star from "$lib/components/star.svelte"
+	import Star from "$lib/components/Star.svelte"
 	
 	let { data } = $props();
 	let isLoggedIn = data.isLoggedIn

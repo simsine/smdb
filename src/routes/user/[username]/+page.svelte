@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Star from '$lib/components/star.svelte'
+	import Star from '$lib/components/Star.svelte'
+	import StatusColorBar from '$lib/components/StatusColorBar.svelte'
 	import { watchStatusMap } from '$lib/helpers/frontend'
 
 	let { data } = $props();
@@ -15,6 +16,7 @@
 	<hr>
 	{#each fullStatuses as fullStatus}
 		<article>
+			<StatusColorBar watchStatus={fullStatus.status.watchStatus}/>
 			<a href="/title/{fullStatus.status.imdbID}">
 				<img src="{fullStatus.omdbTitle.Poster}" alt="" height="100px" width="75px">
 			</a>
@@ -37,7 +39,7 @@
 	{#each fullReviews as fullReview}
 		<article>
 			<a href="/title/{fullReview.review.imdbID}">
-				<img src="{fullReview.omdbTitle.Poster}" alt="" height="100px" width="75px">
+				<img src="{fullReview.omdbTitle.Poster}" alt="{fullReview.omdbTitle.Title} poster" height="100px" width="75px">
 			</a>
 			<div>
 				<p><a href="/title/{fullReview.review.imdbID}">{fullReview.omdbTitle.Title}</a></p>
@@ -52,7 +54,7 @@
 
 <style>
 	hr {
-		flex:0;
+		flex: 0;
 		margin-left: 1rem;
 		margin-right: 1rem;
 	}
@@ -64,22 +66,12 @@
 	section {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5em;
+		gap: 0.5rem;
 		margin-bottom: 1rem;
 	}
 	article {
 		display: flex;
-		gap: 1em;
+		gap: 0.5rem;
 		align-items: center;
-	}
-
-	@media screen and (max-width: 450px) {
-
-	}
-	@media screen and (min-width: 450px) and (max-width: 750px) {
-
-	}
-	@media screen and (min-width: 750px) {
-
 	}
 </style>

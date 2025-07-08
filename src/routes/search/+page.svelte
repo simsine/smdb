@@ -2,7 +2,7 @@
 	import Fa from "svelte-fa"
 	import { faArrowLeftLong, faArrowRightLong } from "@fortawesome/free-solid-svg-icons"
 
-	import MovieShortContainer from "$lib/components/movieShortContainer.svelte"
+	import MovieShortContainer from "$lib/components/MovieShortContainer.svelte"
 
 	import { page } from "$app/stores"
 	import { goto } from "$app/navigation"

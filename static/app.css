@@ -1,5 +1,6 @@
 /* https://coolors.co/palette/780000-c1121f-fdf0d5-003049-669bbc */
 /* https://coolors.co/palette/2b2d42-8d99ae-edf2f4-ef233c-d90429 */
+/* Status: https://coolors.co/0f957e-004fff-fcff4b-ab364d-9cd2fc */
 
 @font-face {
 	font-family: "Outfit";
@@ -14,6 +15,12 @@
 	--color-main-muted: rgba(239, 35, 59, 0.85);
 	--color-secondary: #2b2d42;
 	--box-shadow: 0 3px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+
+	--status-watching: rgb(15, 149, 126);
+	--status-plan-to-watch: rgb(156, 210, 252);
+	--status-completed: rgb(0, 79, 255);
+	--status-on-hold: rgb(252, 255, 75);
+	--status-dropped: rgb(171, 54, 77);
 }
 
 html {
@@ -34,7 +41,6 @@ button:not([type]) {
 	background-color: white;
 	border-radius: 0.25em;
 }
-
 
 h1 {
 	font-size: 2.5rem;
@@ -67,14 +73,14 @@ hr {
 
 dialog {
 	border-color: rgba(237, 242, 244, 0.25);
-	border-radius: 0.25em;
+	border-radius: 0.25rem;
 }
 dialog form {
 	padding: 5px;
 }
 
 input {
-	padding: 0.2em;
+	padding: 0.5rem;
 }
 
 .horizontal-flex {
