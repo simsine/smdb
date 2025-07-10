@@ -12,7 +12,7 @@ export async function getOMDBTitle(imdbID:string):Promise<MovieFull> {
     if (storedTitle && storedTitle.lastUpdated.getDate() == new Date().getDate() ) {
         return storedTitle.data as any
     } else {
-        const response = await fetch(`https://www.omdbapi.com/?apikey=${SECRET_APIKEY}&i=${imdbID}`, {
+        const response = await fetch(`https://www.omdbapi.com/?apikey=${SECRET_APIKEY}&plot=full&i=${imdbID}`, {
             headers: {
                 "Cache-Control": "max-age=3600"
             }
