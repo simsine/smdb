@@ -11,9 +11,7 @@
 		"preview": "vite preview",
 		"postinstall": "prisma generate",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --plugin-search-dir . --check .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-vercel": "^5.7.1",
@@ -21,8 +19,6 @@
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"@types/bcrypt": "^5.0.2",
 		"@types/node": "^22.15.3",
-		"prettier": "^3.4.2",
-		"prettier-plugin-svelte": "^3.3.3",
 		"prisma": "^6.2.1",
 		"svelte": "^5.19.3",
 		"svelte-check": "^4.1.7",
