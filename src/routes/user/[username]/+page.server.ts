@@ -1,9 +1,9 @@
 import { error } from "@sveltejs/kit"
-import pc from "$lib/prisma"
-import { getFullReviews, getFullStatuses, getOMDBTitle } from "$lib/helpers/backend.js";
+import db from "$lib/server/db"
+import { getFullReviews, getFullStatuses } from "$lib/server/helpers";
 
 export const load = (async ({ params, locals }) => {
-	let user = await pc.user.findUnique({
+	let user = await db.user.findUnique({
 		where: {
 			username: params.username,
 		},

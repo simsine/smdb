@@ -1,4 +1,4 @@
-import { lucia } from "$lib/auth/index.js";
+import { lucia } from "$lib/server/auth.js";
 import { redirect, fail } from "@sveltejs/kit"
 
 export const load = async () => {

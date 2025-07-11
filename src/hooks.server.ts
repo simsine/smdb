@@ -1,5 +1,4 @@
-import { lucia } from "$lib/auth"
-import { error } from "@sveltejs/kit";
+import { lucia } from "$lib/server/auth"
 
 export const handle = async ({ event, resolve }) => {
 	// get cookies from browser

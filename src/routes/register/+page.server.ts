@@ -1,9 +1,9 @@
 import { fail, redirect } from "@sveltejs/kit"
 import { hash } from "@node-rs/argon2"
 
-import pc from "$lib/prisma"
+import db from "$lib/server/db"
 import { generateIdFromEntropySize } from "lucia"
-import { lucia } from "$lib/auth/index.js"
+import { lucia } from "$lib/server/auth"
 
 export const actions = {
 	register: async ({ request, cookies }) => {
@@ -15,7 +15,7 @@ export const actions = {
 			return fail(400, { message: "Invalid username" })
 		}
 
-		if (await pc.user.findFirst({
+		if (await db.user.findFirst({
 			where: {
 				username:username
 			}
@@ -34,7 +34,7 @@ export const actions = {
 		});
 
 
-		await pc.user.create({
+		await db.user.create({
 			data: {
 				id:userId,
 				username:username,

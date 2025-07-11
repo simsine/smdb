@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Star from '$lib/components/Star.svelte'
 	import StatusColorBar from '$lib/components/StatusColorBar.svelte'
-	import { watchStatusMap } from '$lib/helpers/frontend'
+	import { watchStatusMap } from '$lib/helpers'
 
 	let { data } = $props();
 	let fullStatuses = data.fullStatuses

@@ -1,7 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit"
 import { verify } from "@node-rs/argon2"
-import { lucia } from "$lib/auth"
-import pc from "$lib/prisma"
+import { lucia } from "$lib/server/auth"
+import db from "$lib/server/db"
 
 export const actions = {
 	login: async ({ cookies, request }) => {
@@ -17,7 +17,7 @@ export const actions = {
 		if (typeof password !== "string" || password.length < 5 || password.length > 255) {
 			return fail(400, { message: "Invalid password" });
 		}
-		const existingUser = await pc.user.findFirst({
+		const existingUser = await db.user.findFirst({
 			where: {
 				username: username
 			}

@@ -1,7 +1,7 @@
-import pc from "$lib/prisma"
+import db from "$lib/server/db"
 
 export const load = (async () => {
-	let news = await pc.news.findMany({
+	let news = await db.news.findMany({
 		where: {
 			isPublished: true,
 		},

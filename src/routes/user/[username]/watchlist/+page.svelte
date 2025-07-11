@@ -2,7 +2,7 @@
     import SvelteTable from 'svelte-table';
     import { onMount } from "svelte"
     import { pushState } from "$app/navigation"
-	import { watchStatusMap } from '$lib/helpers/frontend'
+	import { watchStatusMap } from '$lib/helpers'
 	import StatusColorBar from '$lib/components/StatusColorBar.svelte'
 
     let { data } = $props();
@@ -35,7 +35,7 @@
     }
 
     //? SvelteTable config //
-    const columns = [
+    const columns: any = [
         {
             key: "poster",
             title: "Poster",

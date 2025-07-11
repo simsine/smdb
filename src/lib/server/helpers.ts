@@ -1,10 +1,10 @@
 import { SECRET_APIKEY } from "$env/static/private"
-import pc from "$lib/prisma"
+import db from "$lib/server/db"
 import type { MovieFull } from "$lib/types"
 import type { Review, UserTitleStatus } from "@prisma/client"
 
 export async function getOMDBTitle(imdbID:string):Promise<MovieFull> {
-    const storedTitle = await pc.omdbTitle.findUnique({
+    const storedTitle = await db.omdbTitle.findUnique({
         where: {
             imdbID:imdbID
         }
@@ -19,7 +19,7 @@ export async function getOMDBTitle(imdbID:string):Promise<MovieFull> {
         })
         const title = await response.json()
 	    if (title.Response === "True") {
-            await pc.omdbTitle.upsert({
+            await db.omdbTitle.upsert({
                 where: {
                     imdbID:imdbID
                 },

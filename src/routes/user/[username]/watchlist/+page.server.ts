@@ -1,9 +1,9 @@
-import { getFullStatuses, getOMDBTitle } from '$lib/helpers/backend.js';
-import pc from '$lib/prisma.js';
+import { getFullStatuses, getOMDBTitle } from '$lib/server/helpers';
+import db from '$lib/server/db.js';
 import { error } from '@sveltejs/kit';
 
 export const load = (async ({ params }) => {
-    let user = await pc.user.findUnique({
+    let user = await db.user.findUnique({
         where: {
             username: params.username,
         }
@@ -12,7 +12,7 @@ export const load = (async ({ params }) => {
         error(404, { message: "User not found" });
     }
 
-    let userTitleStatuses = await pc.userTitleStatus.findMany({
+    let userTitleStatuses = await db.userTitleStatus.findMany({
         where: {
             userId: user.id
         },

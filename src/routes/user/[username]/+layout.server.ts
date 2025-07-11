@@ -1,8 +1,8 @@
-import pc from "$lib/prisma"
+import db from "$lib/server/db"
 import { error } from "@sveltejs/kit";
 
 export const load = async ({ params }) => {
-    let user = await pc.user.findUnique({
+    let user = await db.user.findUnique({
         where: {
             username: params.username
         },
@@ -16,14 +16,14 @@ export const load = async ({ params }) => {
 		error(404, { message: "User not found" });
 	}
 
-    let titleCount = await pc.userTitleStatus.count({
+    let titleCount = await db.userTitleStatus.count({
         where: {
             user: {
                 username: user.username
             }
         }
     })
-    let reviewCount = await pc.review.count({
+    let reviewCount = await db.review.count({
         where: {
             author: {
                 username: user.username

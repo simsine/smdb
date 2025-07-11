@@ -1,7 +1,7 @@
 import { error, redirect } from "@sveltejs/kit"
 import { WatchStatus } from "@prisma/client"
-import { getOMDBTitle } from "$lib/helpers/backend"
-import pc from "$lib/prisma"
+import { getOMDBTitle } from "$lib/server/helpers"
+import db from "$lib/server/db"
 
 export const load = async ({params, locals }) => {
 	let imdbID = params.imdbID
@@ -12,7 +12,7 @@ export const load = async ({params, locals }) => {
 		error(404, { message: (movie.Error ??= "Movie with id " + imdbID + " not found") });
 	}
 
-	let reviews = await pc.review.findMany({
+	let reviews = await db.review.findMany({
 		where: {
 			imdbID: movie.imdbID,
 		},
@@ -29,7 +29,7 @@ export const load = async ({params, locals }) => {
 	let userReview
 	let userTitleStatus
 	if (isLoggedIn = locals.user != null) {
-		userReview = await pc.review.findFirst({
+		userReview = await db.review.findFirst({
 			where: {
 				imdbID: movie.imdbID,
 				authorId: locals.user.id,
@@ -40,7 +40,7 @@ export const load = async ({params, locals }) => {
 				rating:true
 			}
 		})
-		userTitleStatus = await pc.userTitleStatus.findFirst({
+		userTitleStatus = await db.userTitleStatus.findFirst({
 			where: {
 				imdbID: movie.imdbID,
 				userId: locals.user.id,
@@ -73,7 +73,7 @@ export const actions = {
 		let currentEpisode = parseInt(data.get("currentEpisode") as string)
 		if (isNaN(currentEpisode)) error(400, { message: "currentEpisode is not a valid number" });
 
-		const userTitleStatus = await pc.userTitleStatus.upsert({
+		const userTitleStatus = await db.userTitleStatus.upsert({
 			where: {
 				userId_imdbID: {
 					userId: event.locals.user.id,
@@ -108,7 +108,7 @@ export const actions = {
 		if (isNaN(rating)) error(404, { message: "Review must include rating" });
 		if (rating < 1 || rating > 10) error(404, { message: "Rating must be between 1-10" });
 
-		await pc.review.upsert({
+		await db.review.upsert({
 			where: {
 				authorId_imdbID: {
 					authorId: event.locals.user.id,
@@ -131,7 +131,7 @@ export const actions = {
 	},
 	deleteReview: async (event) => {
 		if (!event.locals.user) error(404, { message: "User not logged in" });
-		await pc.review.delete({
+		await db.review.delete({
 			where: {
 				authorId_imdbID: {
 					imdbID: event.params.imdbID,
