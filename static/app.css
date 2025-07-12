@@ -18,9 +18,9 @@
 
 	--status-watching: rgb(19, 196, 34);
 	--status-plan-to-watch: rgb(237, 242, 244);
-	--status-completed: rgb(0, 79, 255);
-	--status-on-hold: rgb(252, 255, 75);
-	--status-dropped: rgb(171, 54, 77);
+	--status-completed: rgb(0, 80, 255);
+	--status-on-hold: rgb(210, 213, 5);
+	--status-dropped: rgb(176, 24, 54);
 }
 
 html {
