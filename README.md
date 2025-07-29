@@ -20,7 +20,7 @@ On the backend we use the [Prisma ORM](https://www.prisma.io/) which is a JavaSc
 Requirements for developing this application includes:
 
 -   NodeJS
--   pnpm or the node package manager of your choice
+-   pnpm or the nodejs package-manager of your choice
 -   Development Postgres instance via Docker or other means
 
 You must first set the correct enviornment variables for the project, copy the example file with the following command
