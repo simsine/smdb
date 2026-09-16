@@ -6,7 +6,7 @@
 	
 	let username = data.user?.username
 
-	let url = $derived($page.url.href)
+	let url = $derived($page.url.pathname)
 </script>
 
 <svelte:head>
