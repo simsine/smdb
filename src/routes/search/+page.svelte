@@ -4,19 +4,19 @@
 
 	import MovieShortContainer from "$lib/components/MovieShortContainer.svelte"
 
-	import { page } from "$app/stores"
+	import { page } from "$app/state"
 	import { goto } from "$app/navigation"
 
 	function paginate(sign: number) {
 		const currentPage = parseInt(searchParameters.searchPage)
 		const totalPages = Math.ceil(searchQueryResult.totalResults / 10)
-		let newURL = new URL($page.url)
+		let newURL = new URL(page.url)
 		if (sign == 1 && currentPage >= totalPages) {
 			newURL.searchParams.set("p", "1")
 		} else if (sign == -1 && currentPage <= 1) {
 			newURL.searchParams.set("p", totalPages.toString())
 		} else {
-			newURL.searchParams.set("p", (parseInt($page.url.searchParams.get("p") || "") + sign).toString())
+			newURL.searchParams.set("p", (parseInt(page.url.searchParams.get("p") || "") + sign).toString())
 		}
 		return goto(newURL)
 	}

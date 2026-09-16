@@ -2,7 +2,7 @@
 	import Fa from "svelte-fa"
 	import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons"
 	import { goto } from "$app/navigation"
-	import { page } from "$app/stores"
+	import { page } from "$app/state"
 	import { enhance, applyAction } from "$app/forms"
 	import Star from "$lib/components/Star.svelte"
 	
@@ -24,7 +24,7 @@
 		if (isLoggedIn) {
 			reviewModal?.showModal()
 		} else {
-			goto(`/login?origin=${$page.url.href}`)
+			goto(`/login?origin=${page.url.pathname}`)
 		}
 	}
 	function closeReviewModal() {

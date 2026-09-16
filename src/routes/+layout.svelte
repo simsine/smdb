@@ -1,16 +1,16 @@
 <script lang="ts">
 	import Navbar from "$lib/components/Navbar.svelte"
-	import { page } from "$app/stores"
+	import { page } from "$app/state"
 
 	let { data, children } = $props();
 	
 	let username = data.user?.username
 
-	let url = $derived($page.url.pathname)
+	let url = $derived(page.url.pathname)
 </script>
 
 <svelte:head>
-	<title>{$page.data.pageTitle ? $page.data.pageTitle + " | sMDB" : "sMDB"}</title>
+	<title>{page.data.pageTitle ? page.data.pageTitle + " | sMDB" : "sMDB"}</title>
 </svelte:head>
 
 <div>
